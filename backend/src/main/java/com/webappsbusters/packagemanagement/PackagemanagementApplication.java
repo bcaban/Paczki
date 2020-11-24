@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PackagemanagementApplication {
 
 	public static void main(String[] args) {
+		//FIXME - should be fixed in PAC-29
 		SpringApplication.run(PackagemanagementApplication.class, args);
 	}
 
