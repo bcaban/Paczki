@@ -1,0 +1,24 @@
+<div class="page-wrapper">
+  <div class="d-flex justify-content-center">
+    <div class="d-flex flex-column">
+      <div class="d-flex justify-content-center">
+        <div class="h1">Śledź przesyłkę</div>
+      </div>
+      <div>
+
+        <div class="form-header">
+          <label>
+            <input #searchInput class="au-input au-input-xl" type="text"
+                   placeholder="Wprowadź numer paczki..."
+                   (keyup.enter)="search(searchInput.value)"/>
+          </label>
+          <button class="au-btn-submit"
+                  (click)="search(searchInput.value)">
+            Szukaj
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
