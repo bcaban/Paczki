@@ -28,6 +28,6 @@ public class ParcelController {
         ParcelDto parcelDto =
                 parcelMapper.mapToParcelDto(parcelService.getParcelById(parcelId).
                         orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
-        return new ResponseEntity<>(parcelDto, HttpStatus.FOUND);
+        return ResponseEntity.ok(parcelDto);
     }
 }

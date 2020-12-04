@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "parcel-front"
+  "defaultProject": "parcel-front",
+  "cli": {
+    "analytics": false
+  }
 }
