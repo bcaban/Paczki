@@ -7,8 +7,10 @@ import {SearchComponent} from './components/search/search.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HeaderMenuComponent} from './components/header-menu/header-menu.component';
-import {PackageComponent} from './components/package/package.component';
+import {ParcelComponent} from './components/parcel/parcel.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 
 @NgModule({
   declarations: [
@@ -16,13 +18,19 @@ import {ReactiveFormsModule} from '@angular/forms';
     SearchComponent,
     FooterComponent,
     HeaderMenuComponent,
-    PackageComponent
+    ParcelComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoggerModule.forRoot({
+      serverLoggingUrl: '/api/logs',
+      level: NgxLoggerLevel.DEBUG,
+      serverLogLevel: NgxLoggerLevel.ERROR
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

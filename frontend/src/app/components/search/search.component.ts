@@ -14,8 +14,8 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  search(packageId: string): void {
-    this.router.navigateByUrl(`/search/${packageId}`);
+  search(parcelId: string): void {
+    this.router.navigateByUrl(`/search/${parcelId}`);
   }
 
 }
