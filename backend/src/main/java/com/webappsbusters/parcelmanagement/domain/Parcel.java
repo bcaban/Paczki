@@ -17,7 +17,8 @@ public class Parcel {
     private String parcelId;
 
     @Column(name = "parcelStatus", columnDefinition = "varchar(20)")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ParcelStatus status;
 
     @Column(name = "senderCity", columnDefinition = "varchar(50)")
     private String senderCity;
@@ -53,7 +54,7 @@ public class Parcel {
     private String size;
 
     public static class ParcelBuilder {
-        private String status;
+        private ParcelStatus status;
         private String senderCity;
         private String senderPostCode;
         private String senderStreet;
@@ -66,7 +67,7 @@ public class Parcel {
         private int width;
         private String size;
 
-        public ParcelBuilder status(String status) {
+        public ParcelBuilder status(ParcelStatus status) {
             this.status = status;
             return this;
         }
@@ -132,7 +133,7 @@ public class Parcel {
         }
     }
 
-    private Parcel(String status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
+    private Parcel(ParcelStatus status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
                    String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, String size) {
         this.status = status;
         this.senderCity = senderCity;
