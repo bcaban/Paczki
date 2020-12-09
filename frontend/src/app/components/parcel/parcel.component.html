@@ -4,36 +4,69 @@
       <div class="d-flex justify-content-center">
         <div class="h1">Szukasz paczki o numerze: {{parcelId}}</div>
       </div>
-      <div class="d-flex justify-content-center">
-        <div class="h2">
-          Status: {{parcel.status}}
+
+      <!-- display we still search for parcel, when we call backend -->
+      <div *ngIf="wasParcelSearched; then parcelPresent else searchingForParcel"></div>
+
+      <!-- when we got it display it -->
+      <ng-template #parcelPresent>
+        <div *ngIf="wasParcelFound; then parcelFound else parcelNotFound"></div>
+      </ng-template>
+
+      <ng-template #searchingForParcel>
+        <div class="d-flex justify-content-center">
+          <div class="h2">
+            Szukamy paczki...
+          </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-center">
-        <div class="h3">
-          Rozmiar: {{parcel.size}}
+      </ng-template>
+
+      <ng-template #parcelFound>
+        <div class="d-flex justify-content-center">
+          <div class="h2">
+            Status: {{parcel.status}}
+          </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-center">
-        <div class="h3">
-          Waga: {{parcel.weightInKg + ' kg'}}
+        <div class="d-flex justify-content-center">
+          <div class="h3">
+            Rozmiar: {{parcel.size}}
+          </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-center">
-        <div class="h3">
-          Wymiary: {{parcel.length + 'x' + parcel.width + 'x' + parcel.height}} cm
+        <div class="d-flex justify-content-center">
+          <div class="h3">
+            Waga: {{parcel.weightInKg + ' kg'}}
+          </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-center">
-        <div class="h3">
-          Adres nadawcy: {{parcel.senderCity + ' ' + parcel.senderStreet + ' ' + parcel.senderPostCode}}
+        <div class="d-flex justify-content-center">
+          <div class="h3">
+            Wymiary: {{parcel.length + 'x' + parcel.width + 'x' + parcel.height}} cm
+          </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-center">
-        <div class="h3">
-          Adres odbiorcy: {{parcel.receiverCity + ' ' + parcel.receiverStreet + ' ' + parcel.receiverPostCode}}
+        <div class="d-flex justify-content-center">
+          <div class="h3">
+            Adres nadawcy: {{parcel.senderCity + ' ' + parcel.senderStreet + ' ' + parcel.senderPostCode}}
+          </div>
         </div>
-      </div>
+        <div class="d-flex justify-content-center">
+          <div class="h3">
+            Adres odbiorcy: {{parcel.receiverCity + ' ' + parcel.receiverStreet + ' ' + parcel.receiverPostCode}}
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #parcelNotFound>
+        <div class="d-flex justify-content-center">
+          <div class="h2">
+            Nie znaleziono paczki
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="h2">
+            Sprawdź jeszcze raz numer paczki
+          </div>
+        </div>
+      </ng-template>
+
     </div>
   </div>
 </div>
