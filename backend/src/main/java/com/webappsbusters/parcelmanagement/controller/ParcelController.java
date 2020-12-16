@@ -16,13 +16,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class ParcelController {
 
     private final ParcelService parcelService;
-    private final ParcelMapper parcelMapper;
     private final MapperFacade mapperFacade;
 
     @Autowired
-    public ParcelController(ParcelService parcelService, ParcelMapper parcelMapper, MapperFacade mapperFacade) {
+    public ParcelController(ParcelService parcelService, MapperFacade mapperFacade) {
         this.parcelService = parcelService;
-        this.parcelMapper = parcelMapper;
         this.mapperFacade = mapperFacade;
     }
 
@@ -30,7 +28,7 @@ public class ParcelController {
     public ResponseEntity<ParcelDto> getParcel(@PathVariable String parcelId) {
         ParcelDto parcelDto =
                 mapperFacade.map(parcelService.getParcelById(parcelId).
-                        orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)),ParcelDto.class);
+                        orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)), ParcelDto.class);
         return ResponseEntity.ok(parcelDto);
     }
 }

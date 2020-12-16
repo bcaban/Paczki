@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<orika-core.version>1.5.4</orika-core.version>
 	</properties>
 
 	<dependencies>
@@ -34,7 +35,7 @@
 		<dependency>
 			<groupId>ma.glasnost.orika</groupId>
 			<artifactId>orika-core</artifactId>
-			<version>1.5.4</version>
+			<version>${orika-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>

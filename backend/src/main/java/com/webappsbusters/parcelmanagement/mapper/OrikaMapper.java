@@ -6,6 +6,10 @@ import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.stereotype.Component;
 
+//how to implement (from AttemptTest)
+//MapperFacade facade = new OrikaMapper();
+//ParcelDto parcel1clone = facade.map(parcel1, ParcelDto.class);
+
 @Component
 public class OrikaMapper extends ConfigurableMapper {
     @Override
