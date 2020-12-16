@@ -1,7 +1,7 @@
 package com.webappsbusters.parcelmanagement.controller;
 
+import com.webappsbusters.parcelmanagement.domain.Parcel;
 import com.webappsbusters.parcelmanagement.domain.ParcelDto;
-import com.webappsbusters.parcelmanagement.mapper.ParcelMapper;
 import com.webappsbusters.parcelmanagement.service.ParcelService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,11 @@ public class ParcelController {
 
     @GetMapping(value = "/parcels/{parcelId}")
     public ResponseEntity<ParcelDto> getParcel(@PathVariable String parcelId) {
-        ParcelDto parcelDto =
-                mapperFacade.map(parcelService.getParcelById(parcelId).
-                        orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)), ParcelDto.class);
+        Parcel parcel = parcelService.getParcelById(parcelId).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        ParcelDto parcelDto = mapperFacade.map(parcel, ParcelDto.class);
+
         return ResponseEntity.ok(parcelDto);
     }
 }
