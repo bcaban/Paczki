@@ -4,6 +4,7 @@ import lombok.*;
 
 @NoArgsConstructor
 @Data
+@ToString
 public class ParcelDto {
     private String parcelId;
     private ParcelStatus status;
