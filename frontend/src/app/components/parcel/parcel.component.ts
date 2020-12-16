@@ -5,6 +5,8 @@ import {Parcel} from '../../common/parcel';
 import {NGXLogger} from 'ngx-logger';
 import * as moment from 'moment';
 import 'moment-duration-format';
+import {ParcelStatus} from '../../common/parcel-status';
+import {ParcelStatusTranslatorService} from '../../services/parcel-status-translator.service';
 
 @Component({
   selector: 'app-parcel',
@@ -14,12 +16,16 @@ import 'moment-duration-format';
 export class ParcelComponent implements OnInit {
   parcelId: string = 'not_found';
   parcel: Parcel = null;
+  statusDelivered = ParcelStatus.DELIVERED;
+  statusContact = ParcelStatus.MISSING_IN_ACTION;
+  translatedParcelStatus = '???';
   daysToDeliver: number = 0;
   expectedParcelDeliveryDate: Date = new Date();
   wasParcelSearched = false;
   wasParcelFound = false;
 
-  constructor(private route: ActivatedRoute, private parcelService: ParcelService, private logger: NGXLogger) {
+  constructor(private route: ActivatedRoute, private parcelService: ParcelService,
+              private parcelStatusTranslator: ParcelStatusTranslatorService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
@@ -43,7 +49,8 @@ export class ParcelComponent implements OnInit {
         this.logger.info('Received parcel: {}', parcel);
 
         this.parcel = parcel;
-        this.setExpectedDeliverTime(parcel);
+        this.setExpectedDeliverTime(this.parcel);
+        this.translatedParcelStatus = this.parcelStatusTranslator.translateStatusToPolish(ParcelStatus[this.parcel.status]);
       },
       error => {
         this.wasParcelSearched = true;
