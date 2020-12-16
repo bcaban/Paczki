@@ -16,7 +16,7 @@ export class ParcelService {
   getParcel(parcelId: string): Observable<Parcel> {
     const parcelURL = this.parcelsURL + '/' + parcelId;
 
-    this.logger.info('Getting parcel from:  {}', parcelURL);
+    this.logger.info('Getting parcel from: {}', parcelURL);
 
     return this.httpClient.get<Parcel>(parcelURL);
   }

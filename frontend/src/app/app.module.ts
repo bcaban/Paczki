@@ -20,18 +20,18 @@ import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
     HeaderMenuComponent,
     ParcelComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    NgbModule,
-    ReactiveFormsModule,
-    LoggerModule.forRoot({
-      serverLoggingUrl: '/api/logs',
-      level: NgxLoggerLevel.DEBUG,
-      serverLogLevel: NgxLoggerLevel.ERROR
-    })
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        NgbModule,
+        ReactiveFormsModule,
+        LoggerModule.forRoot({
+            serverLoggingUrl: '/api/logs',
+            level: NgxLoggerLevel.DEBUG,
+            serverLogLevel: NgxLoggerLevel.ERROR
+        })
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

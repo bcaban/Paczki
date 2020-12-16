@@ -10,19 +10,18 @@ import {NGXLogger} from 'ngx-logger';
   styleUrls: ['./parcel.component.css']
 })
 export class ParcelComponent implements OnInit {
-
   parcelId: string = 'not_found';
-  parcel: Parcel = new Parcel();
+  parcel: Parcel = null;
+  wasParcelSearched = false;
+  wasParcelFound = false;
 
-  constructor(private route: ActivatedRoute, private packageService: ParcelService, private logger: NGXLogger) {
+  constructor(private route: ActivatedRoute, private parcelService: ParcelService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       if (this.route.snapshot.paramMap.has('parcelId')) {
         this.getParcel();
-      } else {
-        // TODO redirect to 404
       }
     });
   }
@@ -32,13 +31,20 @@ export class ParcelComponent implements OnInit {
 
     this.logger.info('Getting parcel: {}', this.parcelId);
 
-    this.packageService.getParcel(this.parcelId).subscribe(
-      data => {
-        this.logger.info('Received parcel:  {}', data);
+    this.parcelService.getParcel(this.parcelId).subscribe(
+      parcel => {
+        this.wasParcelSearched = true;
+        this.wasParcelFound = true;
 
-        this.parcel = data;
+        this.logger.info('Received parcel: {}', parcel);
 
-        this.logger.info('Mapped to parcel {}', this.parcel);
+        this.parcel = parcel;
+      },
+      error => {
+        this.wasParcelSearched = true;
+        this.wasParcelFound = false;
+
+        this.logger.info('Cannot find parcel: {}', this.parcelId);
       }
     );
   }
