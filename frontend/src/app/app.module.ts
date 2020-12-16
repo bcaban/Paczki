@@ -11,6 +11,8 @@ import {ParcelComponent} from './components/parcel/parcel.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
+import { ParcelStatusUpdateComponent } from './components/parcel-status-update/parcel-status-update.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
     SearchComponent,
     FooterComponent,
     HeaderMenuComponent,
-    ParcelComponent
+    ParcelComponent,
+    ParcelStatusUpdateComponent,
+    AdminPanelComponent
   ],
     imports: [
         BrowserModule,
