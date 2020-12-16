@@ -52,6 +52,20 @@
             Adres odbiorcy: {{parcel.receiverCity + ' ' + parcel.receiverStreet + ' ' + parcel.receiverPostCode}}
           </div>
         </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="h3">
+            Otrzymasz paczkę za <b>{{daysToDeliver}}</b>
+            <ng-container *ngIf="daysToDeliver > 1; else oneDay"> dni </ng-container>
+            <ng-template #oneDay> dzień </ng-template>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="h3">
+            Przewidywany termin dostawy: <b>{{expectedParcelDeliveryDate | date: 'dd/MM/yy':'UTC'}}</b>
+          </div>
+        </div>
       </ng-template>
 
       <ng-template #parcelNotFound>

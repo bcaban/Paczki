@@ -3,6 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {ParcelService} from '../../services/parcel.service';
 import {Parcel} from '../../common/parcel';
 import {NGXLogger} from 'ngx-logger';
+import * as moment from 'moment';
+import 'moment-duration-format';
 
 @Component({
   selector: 'app-parcel',
@@ -12,6 +14,8 @@ import {NGXLogger} from 'ngx-logger';
 export class ParcelComponent implements OnInit {
   parcelId: string = 'not_found';
   parcel: Parcel = null;
+  daysToDeliver: number = 0;
+  expectedParcelDeliveryDate: Date = new Date();
   wasParcelSearched = false;
   wasParcelFound = false;
 
@@ -39,6 +43,7 @@ export class ParcelComponent implements OnInit {
         this.logger.info('Received parcel: {}', parcel);
 
         this.parcel = parcel;
+        this.setExpectedDeliverTime(parcel);
       },
       error => {
         this.wasParcelSearched = true;
@@ -47,5 +52,12 @@ export class ParcelComponent implements OnInit {
         this.logger.info('Cannot find parcel: {}', this.parcelId);
       }
     );
+  }
+
+  private setExpectedDeliverTime(parcel: Parcel): void {
+    const timeToDeliver = moment.duration(parcel.timeToDeliver);
+
+    this.daysToDeliver = timeToDeliver.asDays();
+    this.expectedParcelDeliveryDate.setDate(new Date().getDate() + this.daysToDeliver);
   }
 }
