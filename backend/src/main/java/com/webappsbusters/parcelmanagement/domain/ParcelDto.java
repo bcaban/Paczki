@@ -9,7 +9,7 @@ import java.time.Duration;
 @ToString
 public class ParcelDto {
     private String parcelId;
-    private ParcelStatus status;
+    private ParcelStatusDto status;
     private String senderCity;
     private String senderPostCode;
     private String senderStreet;
@@ -25,7 +25,7 @@ public class ParcelDto {
 
     public static class ParcelDtoBuilder {
         private String parcelId;
-        private ParcelStatus status;
+        private ParcelStatusDto status;
         private String senderCity;
         private String senderPostCode;
         private String senderStreet;
@@ -44,7 +44,7 @@ public class ParcelDto {
             return this;
         }
 
-        public ParcelDtoBuilder status(ParcelStatus status) {
+        public ParcelDtoBuilder status(ParcelStatusDto status) {
             this.status = status;
             return this;
         }
@@ -116,7 +116,7 @@ public class ParcelDto {
 
     }
 
-    private ParcelDto(String parcelId, ParcelStatus status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
+    private ParcelDto(String parcelId, ParcelStatusDto status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
                       String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, String size, Duration timeToDeliver) {
         this.parcelId = parcelId;
         this.status = status;

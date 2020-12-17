@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "52ffb00e-a865-4e3c-a614-e8b1dcb7f6e3",
+		"_postman_id": "80c8183f-208a-4294-97e3-328e346f2797",
 		"name": "ParcelManagementSystem",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "http://localhost:8080/parcelservice/v1/parcels/{{parcelId}}",
+			"name": "Get Parcel",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -33,11 +33,65 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Update Parcel Status",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"MISSING_IN_ACTION\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parcelservice/v1/parcels/{{parcelId}}/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parcelservice",
+						"v1",
+						"parcels",
+						"{{parcelId}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5e68753f-4000-47f1-9546-6ffc5df1509d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "22b1894a-73d4-42c3-9671-697d7b37776c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
 		{
-			"id": "173c0be9-e837-4e2d-9af5-31dc027ba291",
+			"id": "e0b587ba-e560-4012-a0f8-3ef2f92108e7",
 			"key": "parcelId",
 			"value": "Set parcelId"
 		}

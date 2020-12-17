@@ -24,7 +24,7 @@
       <ng-template #parcelFound>
         <div class="d-flex justify-content-center">
           <div class="h2">
-            Status: {{parcel.status}}
+            Status: {{translatedParcelStatus}}
           </div>
         </div>
         <div class="d-flex justify-content-center">
@@ -55,15 +55,37 @@
 
         <div class="d-flex justify-content-center">
           <div class="h3">
-            Otrzymasz paczkę za <b>{{daysToDeliver}}</b>
-            <ng-container *ngIf="daysToDeliver > 1; else oneDay"> dni </ng-container>
-            <ng-template #oneDay> dzień </ng-template>
+            <ng-container *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact; else deliveredOrContact">
+
+              <ng-container *ngIf="daysToDeliver > 0; else today">
+                Otrzymasz paczkę za <b>{{daysToDeliver}}</b>
+
+                <ng-container *ngIf="daysToDeliver > 1; else oneDay"> dni </ng-container>
+                <ng-template #oneDay> dzień </ng-template>
+              </ng-container>
+
+              <ng-template #today>Otrzymasz paczkę <b>dzisiaj</b></ng-template>
+            </ng-container>
+
+            <ng-template #deliveredOrContact>
+              <ng-container *ngIf="parcel.status === statusDelivered; else contact">
+                <div class="alert-success">Udało się, przesyłka została dostarczona!</div>
+              </ng-container>
+              <ng-template #contact>
+                <div class="alert-danger">Ups, mamy problem z przesyłką, skontaktuj się z obsługą klienta</div>
+              </ng-template>
+            </ng-template>
           </div>
         </div>
 
         <div class="d-flex justify-content-center">
           <div class="h3">
-            Przewidywany termin dostawy: <b>{{expectedParcelDeliveryDate | date: 'dd/MM/yy':'UTC'}}</b>
+            <ng-container *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact; else delivered">
+              Przewidywany termin dostawy: <b>{{expectedParcelDeliveryDate | date: 'dd/MM/yy':'UTC'}}</b>
+            </ng-container>
+            <ng-template #delivered>
+              Przesyłka została dostarczona: <b>{{expectedParcelDeliveryDate | date: 'dd/MM/yy':'UTC'}}</b>
+            </ng-template>
           </div>
         </div>
       </ng-template>
