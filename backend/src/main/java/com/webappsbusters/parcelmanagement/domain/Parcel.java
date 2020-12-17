@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.Duration;
 
 @NoArgsConstructor
 @Data
@@ -17,7 +18,8 @@ public class Parcel {
     private String parcelId;
 
     @Column(name = "parcelStatus", columnDefinition = "varchar(20)")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ParcelStatus status;
 
     @Column(name = "senderCity", columnDefinition = "varchar(50)")
     private String senderCity;
@@ -52,8 +54,11 @@ public class Parcel {
     @Column(name = "size", columnDefinition = "varchar(3)")
     private String size;
 
+    @Column(name = "timeToDeliver")
+    private Duration timeToDeliver;
+
     public static class ParcelBuilder {
-        private String status;
+        private ParcelStatus status;
         private String senderCity;
         private String senderPostCode;
         private String senderStreet;
@@ -65,8 +70,9 @@ public class Parcel {
         private int length;
         private int width;
         private String size;
+        private Duration timeToDeliver;
 
-        public ParcelBuilder status(String status) {
+        public ParcelBuilder status(ParcelStatus status) {
             this.status = status;
             return this;
         }
@@ -126,14 +132,19 @@ public class Parcel {
             return this;
         }
 
+        public ParcelBuilder timeToDeliver(Duration timeToDeliver) {
+            this.timeToDeliver = timeToDeliver;
+            return this;
+        }
+
         public Parcel build() {
             return new Parcel(status, senderCity, senderPostCode, senderStreet, receiverCity, receiverPostCode,
-                    receiverStreet, weightInKg, height, length, width, size);
+                    receiverStreet, weightInKg, height, length, width, size, timeToDeliver);
         }
     }
 
-    private Parcel(String status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
-                   String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, String size) {
+    private Parcel(ParcelStatus status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
+                   String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, String size, Duration timeToDeliver) {
         this.status = status;
         this.senderCity = senderCity;
         this.senderPostCode = senderPostCode;
@@ -146,5 +157,6 @@ public class Parcel {
         this.length = length;
         this.width = width;
         this.size = size;
+        this.timeToDeliver = timeToDeliver;
     }
 }

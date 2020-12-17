@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<orika-core.version>1.5.4</orika-core.version>
 	</properties>
 
 	<dependencies>
@@ -31,7 +32,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+			<version>${orika-core.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

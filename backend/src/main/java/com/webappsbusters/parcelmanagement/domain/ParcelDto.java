@@ -2,11 +2,14 @@ package com.webappsbusters.parcelmanagement.domain;
 
 import lombok.*;
 
+import java.time.Duration;
+
 @NoArgsConstructor
 @Data
+@ToString
 public class ParcelDto {
     private String parcelId;
-    private String status;
+    private ParcelStatusDto status;
     private String senderCity;
     private String senderPostCode;
     private String senderStreet;
@@ -18,10 +21,11 @@ public class ParcelDto {
     private int length;
     private int width;
     private String size;
+    private Duration timeToDeliver;
 
     public static class ParcelDtoBuilder {
         private String parcelId;
-        private String status;
+        private ParcelStatusDto status;
         private String senderCity;
         private String senderPostCode;
         private String senderStreet;
@@ -33,13 +37,14 @@ public class ParcelDto {
         private int length;
         private int width;
         private String size;
+        private Duration timeToDeliver;
 
         public ParcelDtoBuilder parcelId(String parcelId) {
             this.parcelId = parcelId;
             return this;
         }
 
-        public ParcelDtoBuilder status(String status) {
+        public ParcelDtoBuilder status(ParcelStatusDto status) {
             this.status = status;
             return this;
         }
@@ -99,15 +104,20 @@ public class ParcelDto {
             return this;
         }
 
+        public ParcelDtoBuilder timeToDeliver(Duration timeToDeliver) {
+            this.timeToDeliver = timeToDeliver;
+            return this;
+        }
+
         public ParcelDto build() {
             return new ParcelDto(parcelId, status, senderCity, senderPostCode, senderStreet, receiverCity,
-                    receiverPostCode, receiverStreet, weightInKg, height, length, width, size);
+                    receiverPostCode, receiverStreet, weightInKg, height, length, width, size, timeToDeliver);
         }
 
     }
 
-    private ParcelDto(String parcelId, String status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
-                      String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, String size) {
+    private ParcelDto(String parcelId, ParcelStatusDto status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
+                      String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, String size, Duration timeToDeliver) {
         this.parcelId = parcelId;
         this.status = status;
         this.senderCity = senderCity;
@@ -121,5 +131,6 @@ public class ParcelDto {
         this.length = length;
         this.width = width;
         this.size = size;
+        this.timeToDeliver = timeToDeliver;
     }
 }
