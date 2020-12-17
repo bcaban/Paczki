@@ -53,6 +53,22 @@ public class Parcel {
     @Column(name = "size", columnDefinition = "varchar(3)")
     private String size;
 
+    @Builder
+    public static class ParcelBuilder {
+        private ParcelStatus status;
+        private String senderCity;
+        private String senderPostCode;
+        private String senderStreet;
+        private String receiverCity;
+        private String receiverPostCode;
+        private String receiverStreet;
+        private int weightInKg;
+        private int height;
+        private int length;
+        private int width;
+        private String size;
+    }
+    /*
     public static class ParcelBuilder {
         private ParcelStatus status;
         private String senderCity;
@@ -132,7 +148,7 @@ public class Parcel {
                     receiverStreet, weightInKg, height, length, width, size);
         }
     }
-
+    */
     private Parcel(ParcelStatus status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
                    String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, String size) {
         this.status = status;

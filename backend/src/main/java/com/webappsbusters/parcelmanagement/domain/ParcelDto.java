@@ -19,6 +19,23 @@ public class ParcelDto {
     private int width;
     private String size;
 
+    @Builder
+    public static class ParcelDtoBuilder {
+        private String parcelId;
+        private ParcelStatus status;
+        private String senderCity;
+        private String senderPostCode;
+        private String senderStreet;
+        private String receiverCity;
+        private String receiverPostCode;
+        private String receiverStreet;
+        private int weightInKg;
+        private int height;
+        private int length;
+        private int width;
+        private String size;
+    }
+    /*
     public static class ParcelDtoBuilder {
         private String parcelId;
         private ParcelStatus status;
@@ -105,7 +122,7 @@ public class ParcelDto {
         }
 
     }
-
+    */
     private ParcelDto(String parcelId, ParcelStatus status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
                       String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, String size) {
         this.parcelId = parcelId;
