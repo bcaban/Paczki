@@ -53,7 +53,7 @@ public class Parcel {
 
     @Column(name = "size", columnDefinition = "varchar(20)")
     @Enumerated(EnumType.STRING)
-    private ParcelStatus size;
+    private ParcelSize size;
 
     @Column(name = "timeToDeliver")
     private Duration timeToDeliver;
@@ -70,7 +70,7 @@ public class Parcel {
         private int height;
         private int length;
         private int width;
-        private ParcelStatus size;
+        private ParcelSize size;
         private Duration timeToDeliver;
 
         public ParcelBuilder status(ParcelStatus status) {
@@ -128,7 +128,7 @@ public class Parcel {
             return this;
         }
 
-        public ParcelBuilder size(ParcelStatus size) {
+        public ParcelBuilder size(ParcelSize size) {
             this.size = size;
             return this;
         }
@@ -145,7 +145,7 @@ public class Parcel {
     }
 
     private Parcel(ParcelStatus status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
-                   String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, ParcelStatus size, Duration timeToDeliver) {
+                   String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, ParcelSize size, Duration timeToDeliver) {
         this.status = status;
         this.senderCity = senderCity;
         this.senderPostCode = senderPostCode;
