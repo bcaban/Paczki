@@ -33,7 +33,7 @@ public class SizeController {
         return ResponseEntity.ok(parcelDto);
     }
 */
-    @PutMapping("/parcels/{parcelId}/size")
+    @PostMapping("/parcels/{parcelId}/size")
     public ResponseEntity<UpdateParcelSizeDto> updateStatus(@PathVariable String parcelId, @RequestBody UpdateParcelSizeDto updateParcelSize) {
         ParcelSize newSize = mapperFacade.map(updateParcelSize.getSize(), ParcelSize.class);
 

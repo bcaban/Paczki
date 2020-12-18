@@ -13,22 +13,10 @@ import {DummyParcelDimensions} from '../common/dummy-parcel-dimensions';
 export class PostDimensionsService {
   private PARCELS_URL = 'http://localhost:8080/parcelservice/v1';
   private dims = '/dimensions';
-  private postlength;
-  private postwidth;
-  private postdepth;
   constructor(private httpClient: HttpClient, private logger: NGXLogger) {
-  }
-  getDimensions(htmllength: number, htmlwidth: number, htmldepth: number) {
-    this.postlength = htmllength;
-    this.postwidth = htmlwidth;
-    this.postdepth = htmldepth;
   }
   postDimensions(dummy: DummyParcelDimensions): Observable<Object> {
     const parcelURL = this.PARCELS_URL + this.dims;
-    DummyParcelDimensions.dummylength = this.postlength;
-    DummyParcelDimensions.dummywidth = this.postwidth;
-    DummyParcelDimensions.dummydepth = this.postdepth;
-    DummyParcelDimensions
     this.logger.info('Chyba zatrybiło?');
     return this.httpClient.post<Object>(parcelURL, dummy);
   }

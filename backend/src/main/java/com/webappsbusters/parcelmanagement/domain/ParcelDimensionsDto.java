@@ -1,19 +1,19 @@
-/*package com.webappsbusters.parcelmanagement.domain;
+import com.webappsbusters.parcelmanagement.domain.Parcel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
-@Service
-@Transactional
-@Slf4j
+@NoArgsConstructor
+@Data
+@ToString
 public class ParcelDimensionsDto {
     int parcel_width;
     int parcel_length;
     int parcel_height;
-    public ParcelDimensionsDto(ParcelDto parcel) {
-         this.parcel_width = parcel.getWidth();
-         this.parcel_length = parcel.getLength();
-         this.parcel_height = parcel.getHeight();
-    }
+    public int w(Parcel parcel) { return parcel_width = parcel.getWidth(); }
+    public int l(Parcel parcel) { return parcel_length = parcel.getLength(); }
+    public int h(Parcel parcel) { return parcel_height = parcel.getHeight(); }
 }
-*/

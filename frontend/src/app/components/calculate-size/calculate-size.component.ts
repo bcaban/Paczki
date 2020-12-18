@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {CalculateSize} from '../../services/size.service';
 import {PostDimensionsService} from '../../services/post-dimensions.service';
+import {DummyParcelDimensions} from '../../common/dummy-parcel-dimensions';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-calculate-size',
@@ -10,23 +12,23 @@ import {PostDimensionsService} from '../../services/post-dimensions.service';
 })
 export class CalculateSizeComponent implements OnInit {
   dim: string;
-  constructor(private router: Router, private postdim: PostDimensionsService) {
+  constructor(private router: Router, private postdim: PostDimensionsService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
   }
 
   calcsml(length: number, width: number, depth: number): void {
-    this.postdim.getDimensions(length, width, depth).subscribe(
+    const dummyParcelDimensions = new DummyParcelDimensions();
+    dummyParcelDimensions.dummylength = length;
+    dummyParcelDimensions.dummywidth = width;
+    dummyParcelDimensions.dummydepth = depth;
+    this.postdim.postDimensions(dummyParcelDimensions).subscribe(
       response => {
         this.logger.info('Received response: {}', response);
-        this.changeSizeEndedWithSuccess = true;
-        this.changeSizeEndedWithError = false;
       },
       error => {
         this.logger.info('Cannot send dimensions');
-        this.changeSizeEndedWithSuccess = false;
-        this.changeSizeEndedWithError = true;
       }
     );
   }

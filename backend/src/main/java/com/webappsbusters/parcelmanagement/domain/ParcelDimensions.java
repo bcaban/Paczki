@@ -1,11 +1,14 @@
 package com.webappsbusters.parcelmanagement.domain;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
-@Service
-@Transactional
-@Slf4j
+@NoArgsConstructor
+@Data
+@ToString
 public class ParcelDimensions {
     int parcel_width;
     int parcel_length;
