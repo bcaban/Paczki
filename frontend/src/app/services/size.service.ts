@@ -4,7 +4,6 @@ import {Parcel} from '../common/parcel';
 import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {ParcelSize} from '../common/parcel-size';
-// import { Http , Response , RequestOptions , Headers } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +25,12 @@ export class CalculateSize {
 
   updateParcelSize(parcelId: string, newSize: ParcelSize): Observable<Object> {
     const parcelURL = this.PARCELS_URL + '/' + parcelId + this.size;
-    const updateParcelBody = { size: newSize };
+    const updateParcelBody = {size: newSize};
 
     this.logger.info('Changing parcel {} size to {} at:  {}', parcelId, newSize, parcelURL);
 
     return this.httpClient.put<Object>(parcelURL, updateParcelBody);
   }
 }
+
 // w parcelservice zobaczyć i analogicznie na POST
