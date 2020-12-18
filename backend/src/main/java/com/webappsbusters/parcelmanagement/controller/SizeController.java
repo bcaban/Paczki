@@ -22,7 +22,7 @@ public class SizeController {
         this.calculateSize = calculateSize;
         this.mapperFacade = mapperFacade;
     }
-
+/*
     @GetMapping(value = "/parcels/{parcelId}")
     public ResponseEntity<ParcelDto> getParcel(@PathVariable String parcelId) {
         Parcel parcel = calculateSize.getParcelById(parcelId).
@@ -32,12 +32,12 @@ public class SizeController {
 
         return ResponseEntity.ok(parcelDto);
     }
-
+*/
     @PutMapping("/parcels/{parcelId}/size")
     public ResponseEntity<UpdateParcelSizeDto> updateStatus(@PathVariable String parcelId, @RequestBody UpdateParcelSizeDto updateParcelSize) {
         ParcelSize newSize = mapperFacade.map(updateParcelSize.getSize(), ParcelSize.class);
 
-        CalculateSize.updateParcelSize(parcelId, newSize)
+        calculateSize.updateParcelSize(parcelId, newSize)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ResponseEntity.ok(updateParcelSize);
