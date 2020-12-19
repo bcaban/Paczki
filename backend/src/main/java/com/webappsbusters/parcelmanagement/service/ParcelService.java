@@ -1,6 +1,8 @@
 package com.webappsbusters.parcelmanagement.service;
 
 import com.webappsbusters.parcelmanagement.domain.Parcel;
+import com.webappsbusters.parcelmanagement.domain.ParcelHistories;
+import com.webappsbusters.parcelmanagement.domain.ParcelHistory;
 import com.webappsbusters.parcelmanagement.domain.ParcelStatus;
 import com.webappsbusters.parcelmanagement.repository.ParcelRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -26,7 +29,8 @@ public class ParcelService {
         return parcelRepository.findById(id);
     }
 
-    //FIXME #1 in future we should introduce business-logic package with separate classes defining actions, for now it should be ok
+    //FIXME #1 in future we should introduce business-logic package with separate classes defining actions, for now
+    // it should be ok
     //FIXME #2 should we return Parcel or status update response or sth?
     public Optional<Parcel> updateParcelStatus(final String id, ParcelStatus status) {
         log.info("Updating parcel {} status to {}", id, status);
@@ -39,8 +43,14 @@ public class ParcelService {
         parcel.setStatus(status);
         parcel.setTimeToDeliver(ParcelDeliveryTimeMock.mockTime(status));
 
+        parcel.getParcelHistories().add(ParcelHistory.builder().parcelId(parcel).status(status).timestamp(LocalDateTime.now()).build());
+
         parcelRepository.save(parcel);
 
         return parcel;
+    }
+
+    public void saveParcel(Parcel parcel) {
+        parcelRepository.save(parcel);
     }
 }

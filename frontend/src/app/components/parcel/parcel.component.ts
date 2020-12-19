@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import 'moment-duration-format';
 import {ParcelStatus} from '../../common/parcel-status';
 import {ParcelStatusTranslatorService} from '../../services/parcel-status-translator.service';
+import {ParcelHistories} from '../../common/parcel-histories';
 
 @Component({
   selector: 'app-parcel',
@@ -14,15 +15,17 @@ import {ParcelStatusTranslatorService} from '../../services/parcel-status-transl
   styleUrls: ['./parcel.component.css']
 })
 export class ParcelComponent implements OnInit {
-  parcelId: string = 'not_found';
+  parcelId = 'not_found';
   parcel: Parcel = null;
+  parcelHistories: ParcelHistories = null;
   statusDelivered = ParcelStatus.DELIVERED;
   statusContact = ParcelStatus.MISSING_IN_ACTION;
   translatedParcelStatus = '???';
-  daysToDeliver: number = 0;
+  daysToDeliver = 0;
   expectedParcelDeliveryDate: Date = new Date();
   wasParcelSearched = false;
   wasParcelFound = false;
+  wasParcelHistoryFound = false;
 
   constructor(private route: ActivatedRoute, private parcelService: ParcelService,
               private parcelStatusTranslator: ParcelStatusTranslatorService, private logger: NGXLogger) {
@@ -32,6 +35,7 @@ export class ParcelComponent implements OnInit {
     this.route.paramMap.subscribe(() => {
       if (this.route.snapshot.paramMap.has('parcelId')) {
         this.getParcel();
+        this.getParcelHistory();
       }
     });
   }
@@ -66,5 +70,25 @@ export class ParcelComponent implements OnInit {
 
     this.daysToDeliver = timeToDeliver.asDays();
     this.expectedParcelDeliveryDate.setDate(new Date().getDate() + this.daysToDeliver);
+  }
+
+  private getParcelHistory(): void {
+    this.parcelId = this.route.snapshot.paramMap.get('parcelId');
+
+    this.logger.info('Getting parcel history: {}', this.parcelId);
+
+    this.parcelService.getParcelHistory(this.parcelId).subscribe(
+      parcelHistory => {
+        this.wasParcelHistoryFound = true;
+
+        this.logger.info('Received parcel history: {}', parcelHistory.parcelHistory);
+        this.parcelHistories = parcelHistory;
+      },
+      error => {
+        this.wasParcelHistoryFound = false;
+
+        this.logger.info('Cannot find parcel history: {}', this.parcelId);
+      }
+    );
   }
 }
