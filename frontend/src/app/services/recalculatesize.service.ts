@@ -8,7 +8,7 @@ import {ParcelSize} from '../common/parcel-size';
 @Injectable({
   providedIn: 'root'
 })
-export class CalculateSize {
+export class RecalculateSizeService {
   private PARCELS_URL = 'http://localhost:8080/parcelservice/v1/parcels';
   private size = '/size';
 
@@ -32,5 +32,3 @@ export class CalculateSize {
     return this.httpClient.put<Object>(parcelURL, updateParcelBody);
   }
 }
-
-// w parcelservice zobaczyć i analogicznie na POST

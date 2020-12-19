@@ -14,11 +14,11 @@ import java.util.Optional;
 @Service
 @Transactional
 @Slf4j
-public class CalculateSize {
+public class RecalculateSize {
     private final ParcelRepository parcelRepository;
 
     @Autowired
-    public CalculateSize(ParcelRepository parcelRepository) { this.parcelRepository = parcelRepository; }
+    public RecalculateSize(ParcelRepository parcelRepository) { this.parcelRepository = parcelRepository; }
 
     public Optional<Parcel> getParcelById(final String id) {
         log.info("Searching for parcel of id: {}", id);

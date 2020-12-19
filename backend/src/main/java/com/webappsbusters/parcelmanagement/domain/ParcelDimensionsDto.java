@@ -1,10 +1,8 @@
+package com.webappsbusters.parcelmanagement.domain;
 import com.webappsbusters.parcelmanagement.domain.Parcel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
 
 @NoArgsConstructor
 @Data
