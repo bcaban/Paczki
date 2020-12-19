@@ -7,10 +7,10 @@ import lombok.ToString;
 @Data
 @ToString
 public class ParcelDimensions {
-    int parcel_width;
-    int parcel_length;
-    int parcel_height;
-    public int w(Parcel parcel) { return parcel_width = parcel.getWidth(); }
-    public int l(Parcel parcel) { return parcel_length = parcel.getLength(); }
-    public int h(Parcel parcel) { return parcel_height = parcel.getHeight(); }
+    int dummywidth;
+    int dummylength;
+    int dummyheight;
+    public int w(Parcel parcel) { return dummywidth = parcel.getWidth(); }
+    public int l(Parcel parcel) { return dummylength = parcel.getLength(); }
+    public int h(Parcel parcel) { return dummyheight = parcel.getHeight(); }
 }

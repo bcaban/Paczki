@@ -23,23 +23,11 @@ public class DetermineSizeController {
         this.mapperFacade = mapperFacade;
     }
 
-    @GetMapping(value = "/dimensions")
-    public ResponseEntity<ParcelDimensionsDto> getDummyParcelDimensions(int parcel_width, int parcel_length, int parcel_height) {
-        ParcelDimensions dummyParcelDimensions = determineSize.getDummyParcelDimensions().
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    
-        ParcelDimensionsDto dummyParcelDimensionsDto = mapperFacade.map(dummyParcelDimensions, ParcelDimensionsDto.class);
-    
-        return ResponseEntity.ok(dummyParcelDimensionsDto);
-    }
-
-    @PostMapping("/dimensions/done")
-    public ResponseEntity<UpdateParcelSizeDto> updateSize(@PathVariable String parcelId, @RequestBody UpdateParcelSizeDto updateParcelSize) {
-        ParcelSize newSize = mapperFacade.map(updateParcelSize.getSize(), ParcelSize.class);
-
-        DetermineSize.updateParcelSize(parcelId, newSize)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        return ResponseEntity.ok(updateParcelSize);
+    @PostMapping("/dimensions")
+    public ResponseEntity<ParcelSizeHolderDto> getDummyParcelDimensions(@RequestBody ParcelDimensionsDto parcelDimensionsDto) {
+        int l = parcelDimensionsDto.getDummylength();
+        int w = parcelDimensionsDto.getDummywidth();
+        int h = parcelDimensionsDto.getDummyheight();
+        return ResponseEntity.ok(new ParcelSizeHolderDto(mapperFacade.map(determineSize.DetermineDummyParcelSize(l,w,h), ParcelSizeDto.class)));
     }
 }

@@ -12,6 +12,7 @@ import {NGXLogger} from 'ngx-logger';
 export class CalculateSizeComponent implements OnInit {
   click: string;
   was_sent: string;
+  size: string;
   constructor(private router: Router, private postDimensionsService: PostDimensionsService, private logger: NGXLogger) {
   }
 
@@ -27,6 +28,7 @@ export class CalculateSizeComponent implements OnInit {
     this.postDimensionsService.postDimensions(dummyParcelDimensions).subscribe(
       response => {
         this.was_sent = 'yep, dummy sent';
+        this.size = response.parcelSize;
         this.logger.info('Received response: {}', response);
       },
       error => {

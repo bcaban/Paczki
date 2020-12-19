@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/v1")
 public class RecalculateSizeController {
-
+/*
     private final RecalculateSize recalculateSize;
     private final MapperFacade mapperFacade;
 
@@ -41,5 +41,5 @@ public class RecalculateSizeController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ResponseEntity.ok(updateParcelSize);
-    }
+    }*/
 }
