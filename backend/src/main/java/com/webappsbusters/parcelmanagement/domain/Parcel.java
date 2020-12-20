@@ -14,7 +14,7 @@ public class Parcel {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "id",  unique = true, nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "id", unique = true, nullable = false, columnDefinition = "VARCHAR(36)")
     private String parcelId;
 
     @Column(name = "parcelStatus", columnDefinition = "varchar(20)")
@@ -57,6 +57,7 @@ public class Parcel {
     @Column(name = "timeToDeliver")
     private Duration timeToDeliver;
 
+    @Builder
     public static class ParcelBuilder {
         private ParcelStatus status;
         private String senderCity;
@@ -71,7 +72,7 @@ public class Parcel {
         private int width;
         private String size;
         private Duration timeToDeliver;
-
+/*
         public ParcelBuilder status(ParcelStatus status) {
             this.status = status;
             return this;
@@ -158,5 +159,6 @@ public class Parcel {
         this.width = width;
         this.size = size;
         this.timeToDeliver = timeToDeliver;
+    }*/
     }
 }

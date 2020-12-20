@@ -23,6 +23,7 @@ public class ParcelDto {
     private String size;
     private Duration timeToDeliver;
 
+    @Builder
     public static class ParcelDtoBuilder {
         private String parcelId;
         private ParcelStatusDto status;
@@ -38,7 +39,7 @@ public class ParcelDto {
         private int width;
         private String size;
         private Duration timeToDeliver;
-
+/*
         public ParcelDtoBuilder parcelId(String parcelId) {
             this.parcelId = parcelId;
             return this;
@@ -132,5 +133,6 @@ public class ParcelDto {
         this.width = width;
         this.size = size;
         this.timeToDeliver = timeToDeliver;
+    }*/
     }
 }
