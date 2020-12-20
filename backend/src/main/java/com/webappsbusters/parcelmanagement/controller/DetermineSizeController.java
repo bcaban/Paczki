@@ -21,10 +21,10 @@ public class DetermineSizeController {
     }
 
     @PostMapping("/dimensions")
-    public ResponseEntity<ParcelSizeHolderDto> getDummyParcelDimensions(@RequestBody ParcelDimensionsDto parcelDimensionsDto) {
+    public ResponseEntity<ParcelSizeHolderDto> calculateParcelDimensions(@RequestBody ParcelDimensionsDto parcelDimensionsDto) {
         int length = parcelDimensionsDto.getDummylength();
         int width = parcelDimensionsDto.getDummywidth();
         int height = parcelDimensionsDto.getDummyheight();
-        return ResponseEntity.ok(new ParcelSizeHolderDto(mapperFacade.map(determineSize.DetermineDummyParcelSize(length,width,height), ParcelSizeDto.class)));
+        return ResponseEntity.ok(new ParcelSizeHolderDto(mapperFacade.map(determineSize.calculateParcelSize(length,width,height), ParcelSizeDto.class)));
     }
 }

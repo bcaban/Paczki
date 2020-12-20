@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PostDimensionsService } from './post-dimensions.service';
+import { CalculateParcelDimensionsService } from './calculate-parcel-dimensions.service';
 
 describe('PostDimensionsService', () => {
-  let service: PostDimensionsService;
+  let service: CalculateParcelDimensionsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PostDimensionsService);
+    service = TestBed.inject(CalculateParcelDimensionsService);
   });
 
   it('should be created', () => {

@@ -10,7 +10,7 @@ public class ParcelDimensionsDto {
     int dummywidth;
     int dummylength;
     int dummyheight;
-    public int getWidth(Parcel parcel) { return dummywidth = parcel.getWidth(); }
-    public int getLength(Parcel parcel) { return dummylength = parcel.getLength(); }
-    public int getHeight(Parcel parcel) { return dummyheight = parcel.getHeight(); }
+    //public int getWidth(Parcel parcel) { return dummywidth = parcel.getWidth(); }
+    //public int getLength(Parcel parcel) { return dummylength = parcel.getLength(); }
+    //public int getHeight(Parcel parcel) { return dummyheight = parcel.getHeight(); }
 }
