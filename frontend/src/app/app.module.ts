@@ -11,6 +11,7 @@ import {ParcelComponent} from './components/parcel/parcel.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -18,20 +19,21 @@ import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
     SearchComponent,
     FooterComponent,
     HeaderMenuComponent,
-    ParcelComponent
+    ParcelComponent,
+    AdminPanelComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    NgbModule,
-    ReactiveFormsModule,
-    LoggerModule.forRoot({
-      serverLoggingUrl: '/api/logs',
-      level: NgxLoggerLevel.DEBUG,
-      serverLogLevel: NgxLoggerLevel.ERROR
-    })
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        NgbModule,
+        ReactiveFormsModule,
+        LoggerModule.forRoot({
+            serverLoggingUrl: '/api/logs',
+            level: NgxLoggerLevel.DEBUG,
+            serverLogLevel: NgxLoggerLevel.ERROR
+        })
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

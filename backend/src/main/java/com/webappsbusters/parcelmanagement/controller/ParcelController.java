@@ -1,7 +1,6 @@
 package com.webappsbusters.parcelmanagement.controller;
 
-import com.webappsbusters.parcelmanagement.domain.ParcelDto;
-import com.webappsbusters.parcelmanagement.mapper.ParcelMapper;
+import com.webappsbusters.parcelmanagement.domain.*;
 import com.webappsbusters.parcelmanagement.service.ParcelService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,21 @@ public class ParcelController {
 
     @GetMapping(value = "/parcels/{parcelId}")
     public ResponseEntity<ParcelDto> getParcel(@PathVariable String parcelId) {
-        ParcelDto parcelDto =
-                mapperFacade.map(parcelService.getParcelById(parcelId).
-                        orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)), ParcelDto.class);
+        Parcel parcel = parcelService.getParcelById(parcelId).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        ParcelDto parcelDto = mapperFacade.map(parcel, ParcelDto.class);
+
         return ResponseEntity.ok(parcelDto);
+    }
+
+    @PutMapping("/parcels/{parcelId}/status")
+    public ResponseEntity<UpdateParcelStatusDto> updateStatus(@PathVariable String parcelId, @RequestBody UpdateParcelStatusDto updateParcelStatus) {
+        ParcelStatus newStatus = mapperFacade.map(updateParcelStatus.getStatus(), ParcelStatus.class);
+
+        parcelService.updateParcelStatus(parcelId, newStatus)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return ResponseEntity.ok(updateParcelStatus);
     }
 }

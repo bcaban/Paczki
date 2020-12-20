@@ -3,6 +3,10 @@ import {ActivatedRoute} from '@angular/router';
 import {ParcelService} from '../../services/parcel.service';
 import {Parcel} from '../../common/parcel';
 import {NGXLogger} from 'ngx-logger';
+import * as moment from 'moment';
+import 'moment-duration-format';
+import {ParcelStatus} from '../../common/parcel-status';
+import {ParcelStatusTranslatorService} from '../../services/parcel-status-translator.service';
 
 @Component({
   selector: 'app-parcel',
@@ -10,19 +14,24 @@ import {NGXLogger} from 'ngx-logger';
   styleUrls: ['./parcel.component.css']
 })
 export class ParcelComponent implements OnInit {
-
   parcelId: string = 'not_found';
-  parcel: Parcel = new Parcel();
+  parcel: Parcel = null;
+  statusDelivered = ParcelStatus.DELIVERED;
+  statusContact = ParcelStatus.MISSING_IN_ACTION;
+  translatedParcelStatus = '???';
+  daysToDeliver: number = 0;
+  expectedParcelDeliveryDate: Date = new Date();
+  wasParcelSearched = false;
+  wasParcelFound = false;
 
-  constructor(private route: ActivatedRoute, private packageService: ParcelService, private logger: NGXLogger) {
+  constructor(private route: ActivatedRoute, private parcelService: ParcelService,
+              private parcelStatusTranslator: ParcelStatusTranslatorService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       if (this.route.snapshot.paramMap.has('parcelId')) {
         this.getParcel();
-      } else {
-        // TODO redirect to 404
       }
     });
   }
@@ -32,14 +41,30 @@ export class ParcelComponent implements OnInit {
 
     this.logger.info('Getting parcel: {}', this.parcelId);
 
-    this.packageService.getParcel(this.parcelId).subscribe(
-      data => {
-        this.logger.info('Received parcel:  {}', data);
+    this.parcelService.getParcel(this.parcelId).subscribe(
+      parcel => {
+        this.wasParcelSearched = true;
+        this.wasParcelFound = true;
 
-        this.parcel = data;
+        this.logger.info('Received parcel: {}', parcel);
 
-        this.logger.info('Mapped to parcel {}', this.parcel);
+        this.parcel = parcel;
+        this.setExpectedDeliverTime(this.parcel);
+        this.translatedParcelStatus = this.parcelStatusTranslator.translateStatusToPolish(ParcelStatus[this.parcel.status]);
+      },
+      error => {
+        this.wasParcelSearched = true;
+        this.wasParcelFound = false;
+
+        this.logger.info('Cannot find parcel: {}', this.parcelId);
       }
     );
+  }
+
+  private setExpectedDeliverTime(parcel: Parcel): void {
+    const timeToDeliver = moment.duration(parcel.timeToDeliver);
+
+    this.daysToDeliver = timeToDeliver.asDays();
+    this.expectedParcelDeliveryDate.setDate(new Date().getDate() + this.daysToDeliver);
   }
 }

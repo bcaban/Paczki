@@ -12,5 +12,6 @@ export class Parcel {
   length: number;
   width: number;
   size: string;
+  timeToDeliver: string;
 
 }
