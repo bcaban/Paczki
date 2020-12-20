@@ -9,6 +9,7 @@ import {ParcelSize} from '../common/parcel-size';
   providedIn: 'root'
 })
 export class RecalculateSizeService {
+  /*
   private PARCELS_URL = 'http://localhost:8080/parcelservice/v1/parcels';
   private size = '/size';
 
@@ -31,4 +32,5 @@ export class RecalculateSizeService {
 
     return this.httpClient.put<Object>(parcelURL, updateParcelBody);
   }
+   */
 }

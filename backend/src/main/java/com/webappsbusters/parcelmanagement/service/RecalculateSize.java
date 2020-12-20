@@ -15,6 +15,7 @@ import java.util.Optional;
 @Transactional
 @Slf4j
 public class RecalculateSize {
+    /*
     private final ParcelRepository parcelRepository;
 
     @Autowired
@@ -24,9 +25,6 @@ public class RecalculateSize {
         log.info("Searching for parcel of id: {}", id);
         return parcelRepository.findById(id);
     }
-
-    //FIXME #1 in future we should introduce business-logic package with separate classes defining actions, for now it should be ok
-    //FIXME #2 should we return Parcel or Size update response or sth?
     public Optional<Parcel> updateParcelSize(final String id, ParcelSize size) {
         log.info("Updating parcel {} Size to {}", id, size);
 
@@ -38,10 +36,10 @@ public class RecalculateSize {
         int l = pd.l(parcel);
         int w = pd.w(parcel);
         int h = pd.h(parcel);
-        /*
+
         if (l < 0 || w < 0 || h < 0) {
             SML = "Wprwadzono nieprawidłowe wymiary paczki.";
-        }*/
+        }
         if (l > 0 && w > 0 && h > 0){
             if (l > 60 || w > 60 || h > 60) {
                 parcel.setSize(ParcelSize.Large);
@@ -56,4 +54,5 @@ public class RecalculateSize {
         parcelRepository.save(parcel);
         return parcel;
     }
+    */
 }

@@ -21,6 +21,7 @@
     "@angular/router": "~10.1.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
+    "@types/jest": "^26.0.19",
     "bootstrap": "^4.5.2",
     "moment-duration-format": "^2.3.2",
     "ngx-logger": "^4.1.9",

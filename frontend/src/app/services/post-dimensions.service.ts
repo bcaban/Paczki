@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {DummyParcelDimensions} from '../common/dummy-parcel-dimensions';
-import {ParcelSizeHolder} from "../common/parcel-size-holder";
+import {ParcelSizeHolder} from '../common/parcel-size-holder';
 
 @Injectable({
   providedIn: 'root'
