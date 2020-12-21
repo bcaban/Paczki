@@ -20,7 +20,7 @@ public class ParcelDto {
     private int height;
     private int length;
     private int width;
-    private String size;
+    private ParcelSizeDto size;
     private Duration timeToDeliver;
 
     public static class ParcelDtoBuilder {
@@ -36,7 +36,7 @@ public class ParcelDto {
         private int height;
         private int length;
         private int width;
-        private String size;
+        private ParcelSizeDto size;
         private Duration timeToDeliver;
 
         public ParcelDtoBuilder parcelId(String parcelId) {
@@ -99,7 +99,7 @@ public class ParcelDto {
             return this;
         }
 
-        public ParcelDtoBuilder size(String size) {
+        public ParcelDtoBuilder size(ParcelSizeDto size) {
             this.size = size;
             return this;
         }
@@ -117,7 +117,7 @@ public class ParcelDto {
     }
 
     private ParcelDto(String parcelId, ParcelStatusDto status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
-                      String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, String size, Duration timeToDeliver) {
+                      String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, ParcelSizeDto size, Duration timeToDeliver) {
         this.parcelId = parcelId;
         this.status = status;
         this.senderCity = senderCity;

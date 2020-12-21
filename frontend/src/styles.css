@@ -1,3 +1,33 @@
+.calcbutton {
+  position: center;
+  right: 0;
+  min-width: 120px;
+  color: #fff;
+  border: 2px solid #e5e5e5;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 43px;
+  background: #347893
+}
+
+.calcbutton:hover {
+  background: #205565
+}
+
+.calcbutton > i {
+  font-size: 24px;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+}
+
 .au-btn-submit {
   position: relative;
   right: 0;
@@ -50,6 +80,23 @@ input.au-input.au-input-xl {
   -o-transition: all .5s ease;
   -moz-transition: all .5s ease;
   transition: all .5s ease
+}
+
+.dims-xl {
+  min-width: 10px
+}
+
+input.dims.dims-xl {
+  margin-right: 15px
+}
+
+.dims {
+  line-height: 43px;
+  border: 1px solid #e5e5e5;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  padding: 0 17px;
 }
 
 .h1 {
