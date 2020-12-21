@@ -12,6 +12,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { CalculateSizeComponent } from './components/calculate-size/calculate-size.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
     FooterComponent,
     HeaderMenuComponent,
     ParcelComponent,
+    CalculateSizeComponent,
     AdminPanelComponent
   ],
     imports: [

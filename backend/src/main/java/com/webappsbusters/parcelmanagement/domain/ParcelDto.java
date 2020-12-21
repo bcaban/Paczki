@@ -20,7 +20,7 @@ public class ParcelDto {
     private int height;
     private int length;
     private int width;
-    private String size;
+    private ParcelSizeDto size;
     private Duration timeToDeliver;
 
     @Builder
@@ -37,7 +37,7 @@ public class ParcelDto {
         private int height;
         private int length;
         private int width;
-        private String size;
+        private ParcelSizeDto size;
         private Duration timeToDeliver;
     }
 }

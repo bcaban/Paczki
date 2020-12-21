@@ -51,8 +51,9 @@ public class Parcel {
     @Column(name = "width")
     private int width;
 
-    @Column(name = "size", columnDefinition = "varchar(3)")
-    private String size;
+    @Column(name = "size", columnDefinition = "varchar(20)")
+    @Enumerated(EnumType.STRING)
+    private ParcelSize size;
 
     @Column(name = "timeToDeliver")
     private Duration timeToDeliver;
@@ -70,7 +71,7 @@ public class Parcel {
         private int height;
         private int length;
         private int width;
-        private String size;
+        private ParcelSize size;
         private Duration timeToDeliver;
     }
 }
