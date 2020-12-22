@@ -14,7 +14,7 @@ public class Parcel {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "id",  unique = true, nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "id", unique = true, nullable = false, columnDefinition = "VARCHAR(36)")
     private String parcelId;
 
     @Column(name = "parcelStatus", columnDefinition = "varchar(20)")
@@ -58,6 +58,7 @@ public class Parcel {
     @Column(name = "timeToDeliver")
     private Duration timeToDeliver;
 
+    @Builder
     public static class ParcelBuilder {
         private ParcelStatus status;
         private String senderCity;
@@ -72,92 +73,5 @@ public class Parcel {
         private int width;
         private ParcelSize size;
         private Duration timeToDeliver;
-
-        public ParcelBuilder status(ParcelStatus status) {
-            this.status = status;
-            return this;
-        }
-
-        public ParcelBuilder senderCity(String senderCity) {
-            this.senderCity = senderCity;
-            return this;
-        }
-
-        public ParcelBuilder senderPostCode(String senderPostCode) {
-            this.senderPostCode = senderPostCode;
-            return this;
-        }
-
-        public ParcelBuilder senderStreet(String senderStreet) {
-            this.senderStreet = senderStreet;
-            return this;
-        }
-
-        public ParcelBuilder receiverCity(String receiverCity) {
-            this.receiverCity = receiverCity;
-            return this;
-        }
-
-        public ParcelBuilder receiverPostCode(String receiverPostCode) {
-            this.receiverPostCode = receiverPostCode;
-            return this;
-        }
-
-        public ParcelBuilder receiverStreet(String receiverStreet) {
-            this.receiverStreet = receiverStreet;
-            return this;
-        }
-
-        public ParcelBuilder weightInKg(int weightInKg) {
-            this.weightInKg = weightInKg;
-            return this;
-        }
-
-        public ParcelBuilder height(int height) {
-            this.height = height;
-            return this;
-        }
-
-        public ParcelBuilder length(int length) {
-            this.length = length;
-            return this;
-        }
-
-        public ParcelBuilder width(int width) {
-            this.width = width;
-            return this;
-        }
-
-        public ParcelBuilder size(ParcelSize size) {
-            this.size = size;
-            return this;
-        }
-
-        public ParcelBuilder timeToDeliver(Duration timeToDeliver) {
-            this.timeToDeliver = timeToDeliver;
-            return this;
-        }
-
-        public Parcel build() {
-            return new Parcel(status, senderCity, senderPostCode, senderStreet, receiverCity, receiverPostCode,
-                    receiverStreet, weightInKg, height, length, width, size, timeToDeliver);
-        }
-    }
-
-    private Parcel(ParcelStatus status, String senderCity, String senderPostCode, String senderStreet, String receiverCity,
-                   String receiverPostCode, String receiverStreet, int weightInKg, int height, int length, int width, ParcelSize size, Duration timeToDeliver) {
-        this.status = status;
-        this.senderCity = senderCity;
-        this.senderPostCode = senderPostCode;
-        this.senderStreet = senderStreet;
-        this.receiverCity = receiverCity;
-        this.receiverPostCode = receiverPostCode;
-        this.receiverStreet = receiverStreet;
-        this.weightInKg = weightInKg;
-        this.height = height;
-        this.length = length;
-        this.width = width;
-        this.size = size;
-        this.timeToDeliver = timeToDeliver;
     }
 }
