@@ -4,6 +4,7 @@ import {Parcel} from '../common/parcel';
 import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {ParcelStatus} from '../common/parcel-status';
+import {ParcelHistories} from '../common/parcel-histories';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import {ParcelStatus} from '../common/parcel-status';
 export class ParcelService {
   private PARCELS_URL = 'http://localhost:8080/parcelservice/v1/parcels';
   private STATUS = '/status';
+  private HISTORY = '/history';
 
   constructor(private httpClient: HttpClient, private logger: NGXLogger) {
   }
@@ -30,5 +32,13 @@ export class ParcelService {
     this.logger.info('Changing parcel {} status to {} at:  {}', parcelId, newStatus, parcelURL);
 
     return this.httpClient.put<Object>(parcelURL, updateParcelBody);
+  }
+
+  getParcelHistory(parcelId: string): Observable<ParcelHistories> {
+    const parcelURL = this.PARCELS_URL + '/' + parcelId + this.HISTORY;
+
+    this.logger.info('Getting parcel history {} from:  {}', parcelId, parcelURL);
+
+    return this.httpClient.get<ParcelHistories>(parcelURL);
   }
 }

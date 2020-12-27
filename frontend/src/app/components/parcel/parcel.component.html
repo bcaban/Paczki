@@ -88,6 +88,44 @@
             </ng-template>
           </div>
         </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="h3">
+            Historia paczki:
+          </div>
+        </div>
+
+        <ng-container *ngIf="wasParcelHistoryFound; else historyNotFound">
+          <div class="row justify-content-center">
+            <div id="pricing" class="container-fluid">
+              <table class="table table-bordered table-striped text-center">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>STATUS</th>
+                  <th>TIMESTAMP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let parcelHistory of parcelHistories.parcelHistory">
+                  <td>{{parcelHistory.id}}</td>
+                  <td>{{parcelHistory.status}}</td>
+                  <td>{{parcelHistory.timestamp}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </ng-container>
+
+        <ng-template #historyNotFound>
+          <div class="d-flex justify-content-center">
+            <div class="h3">
+              Nie można znaleźć historii
+            </div>
+          </div>
+        </ng-template>
       </ng-template>
 
       <ng-template #parcelNotFound>

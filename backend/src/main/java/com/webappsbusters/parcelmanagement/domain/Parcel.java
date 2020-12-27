@@ -5,10 +5,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity(name = "parcels")
+@Builder
 public class Parcel {
 
     @Id
@@ -58,20 +62,12 @@ public class Parcel {
     @Column(name = "timeToDeliver")
     private Duration timeToDeliver;
 
-    @Builder
-    public static class ParcelBuilder {
-        private ParcelStatus status;
-        private String senderCity;
-        private String senderPostCode;
-        private String senderStreet;
-        private String receiverCity;
-        private String receiverPostCode;
-        private String receiverStreet;
-        private int weightInKg;
-        private int height;
-        private int length;
-        private int width;
-        private ParcelSize size;
-        private Duration timeToDeliver;
-    }
+    @OneToMany(
+            targetEntity = ParcelHistory.class,
+            mappedBy = "parcelId",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<ParcelHistory> parcelHistories = new ArrayList<>();
+
 }

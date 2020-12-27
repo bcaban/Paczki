@@ -9,6 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/v1")
@@ -41,5 +47,21 @@ public class ParcelController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ResponseEntity.ok(updateParcelStatus);
+    }
+
+    //It will be helpful in the future
+    @PostMapping(value = "/parcels/saveParcel")
+    public void saveParcel() {
+        Parcel parcel = Parcel.builder().status(ParcelStatus.ID_ADDED).height(15).length(12).receiverCity(
+                "Lodz").receiverPostCode("92-089").receiverStreet("Mala").senderCity("Warsaw").senderPostCode("98-987"
+        ).senderStreet("Wielka").size(ParcelSize.LARGE).timeToDeliver(Duration.ofDays(3L)).weightInKg(25).width(16).build();
+
+        ParcelHistory parcelHistory = new ParcelHistory(1, ParcelStatus.ID_ADDED, LocalDateTime.now(), parcel);
+        List<ParcelHistory> parcelHistories = new ArrayList<>();
+        parcelHistories.add(parcelHistory);
+        parcel.setParcelId(UUID.randomUUID().toString());
+        parcel.setParcelHistories(parcelHistories);
+
+        parcelService.saveParcel(parcel);
     }
 }

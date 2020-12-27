@@ -1,9 +1,6 @@
 package com.webappsbusters.parcelmanagement.mapper;
 
-import com.webappsbusters.parcelmanagement.domain.Parcel;
-import com.webappsbusters.parcelmanagement.domain.ParcelDto;
-import com.webappsbusters.parcelmanagement.domain.ParcelStatus;
-import com.webappsbusters.parcelmanagement.domain.ParcelStatusDto;
+import com.webappsbusters.parcelmanagement.domain.*;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.converter.ConverterFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
@@ -21,6 +18,12 @@ public class OrikaMapper extends ConfigurableMapper {
                 .byDefault()
                 .register();
         factory.classMap(ParcelStatus.class, ParcelStatusDto.class)
+                .byDefault()
+                .register();
+        factory.classMap(ParcelHistory.class, ParcelHistoryDto.class)
+                .byDefault()
+                .register();
+        factory.classMap(ParcelHistories.class, ParcelHistoriesDto.class)
                 .byDefault()
                 .register();
 
