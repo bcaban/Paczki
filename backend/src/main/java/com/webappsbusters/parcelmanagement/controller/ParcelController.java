@@ -60,9 +60,24 @@ public class ParcelController {
     //It will be helpful in the future
     @PostMapping(value = "/parcels/saveParcel")
     public void saveParcel() {
-        Parcel parcel = Parcel.builder().status(ParcelStatus.ID_ADDED).height(15).length(12).receiverCity(
-                "Lodz").receiverPostCode("92-089").receiverStreet("Mala").senderCity("Warsaw").senderPostCode("98-987"
-        ).senderStreet("Wielka").size(ParcelSize.LARGE).timeToDeliver(Duration.ofDays(3L)).weightInKg(25).width(16).build();
+        Parcel parcel = Parcel.builder()
+                .status(ParcelStatus.ID_ADDED)
+                .height(15)
+                .length(12)
+                .receiverCity("Lodz")
+                .receiverPostCode("92-089")
+                .receiverStreet("Mala")
+                .senderCity("Warsaw")
+                .senderPostCode("98-987")
+                .senderStreet("Wielka")
+                .size(ParcelSize.LARGE)
+                .timeToDeliver(Duration.ofDays(3L))
+                .weightInKg(25).width(16)
+                .parcelAccess(ParcelAccess.builder()
+                        .adminCode("c1b2208e-dc02-4c4b-b290-d2bd1bac5b07")
+                        .clientCode("922bb15d-e772-485f-82c8-7bfc18e85677")
+                        .build())
+                .build();
 
         ParcelHistory parcelHistory = new ParcelHistory(1, ParcelStatus.ID_ADDED, LocalDateTime.now(), parcel);
         List<ParcelHistory> parcelHistories = new ArrayList<>();
