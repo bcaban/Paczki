@@ -1,4 +1,4 @@
-import { ParcelSize } from './parcel-size';
+import {ParcelSize} from './parcel-size';
 
 describe('ParcelSize', () => {
   it('should create an instance', () => {

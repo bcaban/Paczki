@@ -11,8 +11,8 @@ import {ParcelComponent} from './components/parcel/parcel.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
-import { CalculateSizeComponent } from './components/calculate-size/calculate-size.component';
+import {AdminPanelComponent} from './components/admin-panel/admin-panel.component';
+import {CalculateSizeComponent} from './components/calculate-size/calculate-size.component';
 
 @NgModule({
   declarations: [
@@ -24,18 +24,18 @@ import { CalculateSizeComponent } from './components/calculate-size/calculate-si
     CalculateSizeComponent,
     AdminPanelComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        NgbModule,
-        ReactiveFormsModule,
-        LoggerModule.forRoot({
-            serverLoggingUrl: '/api/logs',
-            level: NgxLoggerLevel.DEBUG,
-            serverLogLevel: NgxLoggerLevel.ERROR
-        })
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    NgbModule,
+    ReactiveFormsModule,
+    LoggerModule.forRoot({
+      serverLoggingUrl: '/api/logs',
+      level: NgxLoggerLevel.DEBUG,
+      serverLogLevel: NgxLoggerLevel.ERROR
+    })
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { ParcelDimensions } from './parcel-dimensions';
+import {ParcelDimensions} from './parcel-dimensions';
 
 describe('DummyParcelDimensions', () => {
   it('should create an instance', () => {

@@ -49,6 +49,14 @@ public class ParcelController {
         return ResponseEntity.ok(updateParcelStatus);
     }
 
+    @PutMapping("/parcels/{parcelId}/name")
+    public ResponseEntity<ParcelDto> changeParcelName(@PathVariable String parcelId, @RequestBody ChangeParcelNameDto changeParcelNameDto) {
+        Parcel parcel = parcelService.changeName(parcelId, changeParcelNameDto.getName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return ResponseEntity.ok(mapperFacade.map(parcel, ParcelDto.class));
+    }
+
     //It will be helpful in the future
     @PostMapping(value = "/parcels/saveParcel")
     public void saveParcel() {
@@ -61,6 +69,7 @@ public class ParcelController {
         parcelHistories.add(parcelHistory);
         parcel.setParcelId(UUID.randomUUID().toString());
         parcel.setParcelHistories(parcelHistories);
+
 
         parcelService.saveParcel(parcel);
     }

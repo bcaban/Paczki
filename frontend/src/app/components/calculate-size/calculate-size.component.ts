@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CalculateParcelDimensionsService} from '../../services/calculate-parcel-dimensions.service';
 import {ParcelDimensions} from '../../common/parcel-dimensions';
@@ -11,6 +11,7 @@ import {NGXLogger} from 'ngx-logger';
 })
 export class CalculateSizeComponent implements OnInit {
   size: string;
+
   constructor(private router: Router, private postDimensionsService: CalculateParcelDimensionsService, private logger: NGXLogger) {
   }
 
@@ -21,10 +22,9 @@ export class CalculateSizeComponent implements OnInit {
     const dummyParcelDimensions = new ParcelDimensions(length, width, height);
     this.postDimensionsService.postDimensions(dummyParcelDimensions).subscribe(
       response => {
-        if (response.parcelSize === 'NONE'){
+        if (response.parcelSize === 'NONE') {
           this.size = 'Podano nieprawidłowe wymiary';
-        }
-        else {
+        } else {
           this.size = response.parcelSize;
         }
         this.logger.info('Received response: {}', response);

@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { CalculateParcelDimensionsService } from './calculate-parcel-dimensions.service';
+import {CalculateParcelDimensionsService} from './calculate-parcel-dimensions.service';
 
 describe('PostDimensionsService', () => {
   let service: CalculateParcelDimensionsService;

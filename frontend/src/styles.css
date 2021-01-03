@@ -111,11 +111,11 @@ select {
   font-size: 24px;
   color: #666;
   background: transparent;
-  display:inline-block;
-  overflow:hidden;
-  border:1px solid #666;
-  outline:1px solid #666;
-  border-radius:36px;
+  display: inline-block;
+  overflow: hidden;
+  border: 1px solid #666;
+  outline: 1px solid #666;
+  border-radius: 36px;
 }
 
 select option {
@@ -127,13 +127,7 @@ select:active, select:hover {
   outline-color: #205565
 }
 
-.selectBox{
-  border:1px solid #666;
-  outline:1px;
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+.selectBox {
+  border: 1px solid #666;
+  outline: 1px;
 }

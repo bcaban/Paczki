@@ -10,8 +10,10 @@ import {ParcelSizeHolder} from '../common/parcel-size-holder';
 })
 export class CalculateParcelDimensionsService {
   private PARCELS_URL = 'http://localhost:8080/parcelservice/v1/dimensions';
+
   constructor(private httpClient: HttpClient, private logger: NGXLogger) {
   }
+
   postDimensions(dummy: ParcelDimensions): Observable<ParcelSizeHolder> {
     const parcelURL = this.PARCELS_URL;
     this.logger.info('Sending values to {}:', parcelURL);

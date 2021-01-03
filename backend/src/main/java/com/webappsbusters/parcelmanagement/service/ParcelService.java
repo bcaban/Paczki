@@ -1,7 +1,6 @@
 package com.webappsbusters.parcelmanagement.service;
 
 import com.webappsbusters.parcelmanagement.domain.Parcel;
-import com.webappsbusters.parcelmanagement.domain.ParcelHistories;
 import com.webappsbusters.parcelmanagement.domain.ParcelHistory;
 import com.webappsbusters.parcelmanagement.domain.ParcelStatus;
 import com.webappsbusters.parcelmanagement.repository.ParcelRepository;
@@ -52,5 +51,14 @@ public class ParcelService {
 
     public void saveParcel(Parcel parcel) {
         parcelRepository.save(parcel);
+    }
+
+    public Optional<Parcel> changeName(String parcelId, String name) {
+        return getParcelById(parcelId)
+                .map(parcel -> {
+                    parcel.setName(name);
+                    parcelRepository.save(parcel);
+                    return parcel;
+                });
     }
 }
