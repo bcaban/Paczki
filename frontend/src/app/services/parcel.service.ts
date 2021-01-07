@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {ParcelStatus} from '../common/parcel-status';
 import {ParcelHistories} from '../common/parcel-histories';
+import {ParcelHolder} from '../common/parcel-holder';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,14 @@ export class ParcelService {
   private HISTORY = '/history';
 
   constructor(private httpClient: HttpClient, private logger: NGXLogger) {
+  }
+
+  createParcel(parcel: Parcel): Observable<Parcel> {
+    const parcelURL = this.PARCELS_URL;
+
+    this.logger.info('Sending values to {}:', parcelURL);
+
+    return this.httpClient.post<Parcel>(parcelURL, parcel);
   }
 
   getParcel(parcelId: string): Observable<Parcel> {

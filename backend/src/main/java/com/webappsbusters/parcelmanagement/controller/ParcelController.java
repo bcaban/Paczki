@@ -50,7 +50,13 @@ public class ParcelController {
     }
 
     //It will be helpful in the future
-    @PostMapping(value = "/parcels/saveParcel")
+    @PostMapping(value = "/parcels")
+    public ResponseEntity<ParcelDto> createParcel(@RequestBody ParcelDto parcelDto) {
+        Parcel parcel = mapperFacade.map(parcelDto, Parcel.class);
+        parcel.setStatus(ParcelStatus.ID_ADDED);
+        return ResponseEntity.ok(mapperFacade.map(parcelService.saveParcel(parcel), ParcelDto.class));
+    }
+
     public void saveParcel() {
         Parcel parcel = Parcel.builder().status(ParcelStatus.ID_ADDED).height(15).length(12).receiverCity(
                 "Lodz").receiverPostCode("92-089").receiverStreet("Mala").senderCity("Warsaw").senderPostCode("98-987"

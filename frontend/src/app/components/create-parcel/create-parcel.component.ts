@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {CalculateParcelDimensionsService} from '../../services/calculate-parcel-dimensions.service';
-import {ParcelDimensions} from '../../common/parcel-dimensions';
 import {NGXLogger} from 'ngx-logger';
+import {Parcel} from '../../common/parcel';
+import {ParcelService} from '../../services/parcel.service';
 
 @Component({
   selector: 'app-create-parcel',
@@ -10,27 +10,26 @@ import {NGXLogger} from 'ngx-logger';
   styleUrls: ['./create-parcel.component.css']
 })
 export class CreateParcelComponent implements OnInit {
-  size: string;
-  constructor(private router: Router, private postDimensionsService: CalculateParcelDimensionsService, private logger: NGXLogger) {
+  response: string;
+  constructor(private router: Router, private parcelService: ParcelService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
   }
-// tslint:disable-next-line:max-line-length
-  postsml(receiverCity: string, receiverPostCode: string, receiverStreet: string, senderCity: string, senderPostCode: string, senderStreet: string, weightInKg: number, length: number, width: number, height: number): void {
-    const dummyParcelDimensions = new ParcelDimensions(length, width, height);
-    this.postDimensionsService.postDimensions(dummyParcelDimensions).subscribe(
+  postParcel(senderCity: string, senderPostCode: string, senderStreet: string, receiverCity: string, receiverPostCode: string, receiverStreet: string, weightInKg: number, length: number, width: number, height: number): void {
+    const parcel = new Parcel(senderCity, senderPostCode, senderStreet, receiverCity, receiverPostCode, receiverStreet, weightInKg, length, width, height);
+    this.parcelService.createParcel(parcel).subscribe(
       response => {
-        if (response.parcelSize === 'NONE'){
-          this.size = 'Podano nieprawidłowe dane';
+        if (response.receiverCity === ''){
+          this.response = 'Nie można nadać paczki.';
         }
         else {
-          this.size = response.parcelSize;
+          this.response = 'Paczka została nadana.';
         }
         this.logger.info('Received response: {}', response);
       },
       error => {
-        this.logger.info('Cannot send dimensions', error);
+        this.logger.info('Cannot create parcel', error);
       }
     );
   }

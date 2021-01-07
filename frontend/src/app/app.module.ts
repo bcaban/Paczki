@@ -24,7 +24,7 @@ import { CreateParcelComponent } from './components/create-parcel/create-parcel.
     ParcelComponent,
     CalculateSizeComponent,
     AdminPanelComponent,
-    CreateParcelComponent
+    CreateParcelComponent,
   ],
     imports: [
         BrowserModule,
