@@ -13,6 +13,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { CalculateSizeComponent } from './components/calculate-size/calculate-size.component';
+import { CreateParcelComponent } from './components/create-parcel/create-parcel.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CalculateSizeComponent } from './components/calculate-size/calculate-si
     HeaderMenuComponent,
     ParcelComponent,
     CalculateSizeComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    CreateParcelComponent
   ],
     imports: [
         BrowserModule,

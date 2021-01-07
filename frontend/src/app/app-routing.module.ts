@@ -4,8 +4,10 @@ import {ParcelComponent} from './components/parcel/parcel.component';
 import {SearchComponent} from './components/search/search.component';
 import {AdminPanelComponent} from './components/admin-panel/admin-panel.component';
 import { CalculateSizeComponent } from './components/calculate-size/calculate-size.component';
+import {CreateParcelComponent} from './components/create-parcel/create-parcel.component';
 
 const routes: Routes = [
+  {path: 'create-parcel/postsml', component: CreateParcelComponent},
   {path: 'calculate-size/ifsml', component: CalculateSizeComponent},
   {path: 'search/:parcelId', component: ParcelComponent},
   {path: 'search', component: SearchComponent},
