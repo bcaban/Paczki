@@ -62,6 +62,9 @@ public class Parcel {
     @Column(name = "timeToDeliver")
     private Duration timeToDeliver;
 
+    @Column(name = "name")
+    private String name;
+
     @OneToMany(
             targetEntity = ParcelHistory.class,
             mappedBy = "parcelId",

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ParcelStatus} from '../common/parcel-status';
 
 @Injectable({
@@ -7,7 +7,8 @@ import {ParcelStatus} from '../common/parcel-status';
 // FIXME CHANGE THIS JUNK TO ANGULAR I18N IN FUTURE
 export class ParcelStatusTranslatorService {
 
-  constructor() { }
+  constructor() {
+  }
 
   translateStatusToPolish(parcelStatus: ParcelStatus): string {
     switch (parcelStatus) {

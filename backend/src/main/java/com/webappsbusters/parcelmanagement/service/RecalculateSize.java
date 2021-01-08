@@ -1,15 +1,9 @@
 package com.webappsbusters.parcelmanagement.service;
 
-import com.webappsbusters.parcelmanagement.domain.Parcel;
-import com.webappsbusters.parcelmanagement.domain.ParcelDimensions;
-import com.webappsbusters.parcelmanagement.domain.ParcelSize;
-import com.webappsbusters.parcelmanagement.repository.ParcelRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @Transactional

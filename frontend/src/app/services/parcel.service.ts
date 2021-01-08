@@ -13,6 +13,7 @@ export class ParcelService {
   private PARCELS_URL = 'http://localhost:8080/parcelservice/v1/parcels';
   private STATUS = '/status';
   private HISTORY = '/history';
+  private NAME = '/name';
 
   constructor(private httpClient: HttpClient, private logger: NGXLogger) {
   }
@@ -27,7 +28,7 @@ export class ParcelService {
 
   updateParcelStatus(parcelId: string, newStatus: ParcelStatus): Observable<Object> {
     const parcelURL = this.PARCELS_URL + '/' + parcelId + this.STATUS;
-    const updateParcelBody = { status: newStatus };
+    const updateParcelBody = {status: newStatus};
 
     this.logger.info('Changing parcel {} status to {} at:  {}', parcelId, newStatus, parcelURL);
 
@@ -40,5 +41,14 @@ export class ParcelService {
     this.logger.info('Getting parcel history {} from:  {}', parcelId, parcelURL);
 
     return this.httpClient.get<ParcelHistories>(parcelURL);
+  }
+
+  setParcelName(parcelId: string, newName: string): Observable<Parcel> {
+    const parcelURL = this.PARCELS_URL + '/' + parcelId + this.NAME;
+    const changeParcelNameBody = {name: newName};
+
+    this.logger.info('Changing parcel {} name to: {}, from: {}', parcelId, name, parcelURL);
+
+    return this.httpClient.put<Parcel>(parcelURL, changeParcelNameBody);
   }
 }

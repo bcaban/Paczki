@@ -1,4 +1,4 @@
-import { ParcelSizeHolder } from './parcel-size-holder';
+import {ParcelSizeHolder} from './parcel-size-holder';
 
 describe('ParcelSizeHolder', () => {
   it('should create an instance', () => {

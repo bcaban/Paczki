@@ -27,6 +27,10 @@ export class ParcelComponent implements OnInit {
   wasParcelFound = false;
   wasParcelHistoryFound = false;
 
+  isNameLengthTooShort = false;
+  wasParcelNameChanged = false;
+  wasParcelNameChangeRequested = false;
+
   constructor(private route: ActivatedRoute, private parcelService: ParcelService,
               private parcelStatusTranslator: ParcelStatusTranslatorService, private logger: NGXLogger) {
   }
@@ -90,5 +94,30 @@ export class ParcelComponent implements OnInit {
         this.logger.info('Cannot find parcel history: {}', this.parcelId);
       }
     );
+  }
+
+  setNameOfParcel(name: string): void {
+    if (name.length === 0) {
+      this.wasParcelNameChangeRequested = false;
+      this.wasParcelNameChanged = false;
+      this.isNameLengthTooShort = true;
+    } else {
+      this.isNameLengthTooShort = false;
+      this.logger.info('Changing parcel: {} name to {}', this.parcelId, name);
+
+      this.parcelService.setParcelName(this.parcelId, name).subscribe(
+        result => {
+          this.wasParcelNameChangeRequested = true;
+          this.wasParcelNameChanged = true;
+          this.logger.info('Changed parcel {} name to {}', this.parcel, name);
+
+          this.parcel.name = result.name;
+        },
+        error => {
+          this.wasParcelNameChangeRequested = true;
+          this.logger.info('Cannot change parcel {} name to: {}', this.parcelId, name);
+        }
+      );
+    }
   }
 }
