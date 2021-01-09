@@ -73,4 +73,8 @@ public class Parcel {
     )
     private List<ParcelHistory> parcelHistories = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "parcelAccesses_id", referencedColumnName = "id")
+    private ParcelAccess parcelAccess; //TODO PAC-42 generate this on parcel create
+
 }

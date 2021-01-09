@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {ParcelStatus} from '../common/parcel-status';
 import {ParcelHistories} from '../common/parcel-histories';
+import {ParcelAccess} from '../common/parcel-access';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class ParcelService {
   private STATUS = '/status';
   private HISTORY = '/history';
   private NAME = '/name';
+  private ACCESS = '/access';
 
   constructor(private httpClient: HttpClient, private logger: NGXLogger) {
   }
@@ -50,5 +52,23 @@ export class ParcelService {
     this.logger.info('Changing parcel {} name to: {}, from: {}', parcelId, name, parcelURL);
 
     return this.httpClient.put<Parcel>(parcelURL, changeParcelNameBody);
+  }
+
+  getParcelAccessStatusClient(parcelId: string, clientAccessCode: string): Observable<ParcelAccess> {
+    const parcelURL = this.PARCELS_URL + '/' + parcelId + this.ACCESS;
+    const clientAccessBody = { clientCode: clientAccessCode };
+
+    this.logger.info('Checking access status for parcel ' + parcelId + ' with code ' + clientAccessCode + ' from ' + parcelURL);
+
+    return this.httpClient.post<ParcelAccess>(parcelURL, clientAccessBody);
+  }
+
+  getParcelAccessStatusAdmin(parcelId: string, adminAccessCode: string): Observable<ParcelAccess> {
+    const parcelURL = this.PARCELS_URL + '/' + parcelId + this.ACCESS;
+    const adminAccessBody = { adminCode: adminAccessCode };
+
+    this.logger.info('Checking access status for parcel ' + parcelId + ' with code ' + adminAccessCode + ' from ' + parcelURL);
+
+    return this.httpClient.post<ParcelAccess>(parcelURL, adminAccessBody);
   }
 }

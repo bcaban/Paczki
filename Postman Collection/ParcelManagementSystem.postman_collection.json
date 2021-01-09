@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "80c8183f-208a-4294-97e3-328e346f2797",
+		"_postman_id": "447af862-1e6e-4707-9bad-a6831d9e6743",
 		"name": "ParcelManagementSystem",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -65,13 +65,74 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Access - Client",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"clientCode\": \"922bb15d-e772-485f-82c8-7bfc18e85677\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/parcelservice/v1/parcels/{{parcelId}}/access",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parcelservice",
+						"v1",
+						"parcels",
+						"{{parcelId}}",
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Access - Admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"adminCode\": \"c1b2208e-dc02-4c4b-b290-d2bd1bac5b07\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/parcelservice/v1/parcels/{{parcelId}}/access",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parcelservice",
+						"v1",
+						"parcels",
+						"{{parcelId}}",
+						"access"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "5e68753f-4000-47f1-9546-6ffc5df1509d",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -81,7 +142,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "22b1894a-73d4-42c3-9671-697d7b37776c",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -91,10 +151,8 @@
 	],
 	"variable": [
 		{
-			"id": "e0b587ba-e560-4012-a0f8-3ef2f92108e7",
 			"key": "parcelId",
 			"value": "Set parcelId"
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
