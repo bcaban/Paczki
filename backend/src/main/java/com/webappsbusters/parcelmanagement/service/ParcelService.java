@@ -53,6 +53,20 @@ public class ParcelService {
         parcelRepository.save(parcel);
     }
 
+    public Optional<Parcel> changeDeliveryAddress(String parcelId, String receiverCity, String receiverPostCode,
+                                                  String receiverStreet) {
+
+        return getParcelById(parcelId)
+                .filter(parcel -> parcel.getStatus().equals(ParcelStatus.ID_ADDED))
+                .map(parcel -> {
+                    parcel.setReceiverCity(receiverCity);
+                    parcel.setReceiverPostCode(receiverPostCode);
+                    parcel.setReceiverStreet(receiverStreet);
+                    parcelRepository.save(parcel);
+                    return parcel;
+                });
+    }
+
     public Optional<Parcel> changeName(String parcelId, String name) {
         return getParcelById(parcelId)
                 .map(parcel -> {

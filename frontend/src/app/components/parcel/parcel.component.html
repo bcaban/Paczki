@@ -119,7 +119,6 @@
               </table>
             </div>
           </div>
-
         </ng-container>
 
         <ng-template #historyNotFound>
@@ -188,6 +187,67 @@
         </div>
       </ng-template>
 
+      <div class="d-flex justify-content-center">
+        <div class="h4">
+          Zmień adres dostawy:
+        </div>
+      </div>
+
+      <div class="form-header">
+        <div class="h5">
+          Zmień nazwę miasta na:
+        </div>
+
+        <label>
+          <input #receiverCityInput class="au-input au-input-xl" type="text"
+                 placeholder="Wprowadź nazwę miasta..."
+          />
+        </label>
+
+        <div class="h5">
+          Zmień kod pocztowy na:
+        </div>
+
+        <label>
+          <input #receiverPostCodeInput class="au-input au-input-xl" type="text"
+                 placeholder="Wprowadź kod pocztowy..."
+          />
+        </label>
+
+        <div class="h5">
+          Zmień nazwę ulicy na:
+        </div>
+
+        <label>
+          <input #receiverStreetInput class="au-input au-input-xl" type="text"
+                 placeholder="Wprowadź nazwę ulicy..."
+          />
+        </label>
+
+        <button class="au-btn-submit"
+                (click)="changeDeliveryAddress(receiverCityInput.value, receiverPostCodeInput.value, receiverStreetInput.value)">
+          Zmień
+        </button>
+      </div>
+
+      <div *ngIf="isWrongAddressInput;">
+        <div class="alert-danger">Błędnie wprowadzono nowy adres dostawy</div>
+      </div>
+
+      <div *ngIf="wasAddressChangeRequested">
+        <div *ngIf="wasAddressChanged; else addressNotChanged">
+          <div class="alert-success">Poprawnie zmnieniono adres dostawy</div>
+        </div>
+        <ng-template #addressNotChanged>
+          <div class="alert-danger">Nie udało sie zmienić adresu dostawy, spróbuj ponownie</div>
+        </ng-template>
+      </div>
+
+      <div *ngIf="isBadStatus;">
+        <div class="alert-danger">
+          Przy obecnym statusie paczki nie ma możliwości zmiany adresu dostawy
+        </div>
+      </div>
 
     </div>
   </div>

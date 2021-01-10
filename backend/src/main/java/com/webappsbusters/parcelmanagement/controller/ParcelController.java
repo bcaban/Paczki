@@ -40,13 +40,25 @@ public class ParcelController {
     }
 
     @PutMapping("/parcels/{parcelId}/status")
-    public ResponseEntity<UpdateParcelStatusDto> updateStatus(@PathVariable String parcelId, @RequestBody UpdateParcelStatusDto updateParcelStatus) {
+    public ResponseEntity<UpdateParcelStatusDto> updateStatus(@PathVariable String parcelId,
+                                                              @RequestBody UpdateParcelStatusDto updateParcelStatus) {
         ParcelStatus newStatus = mapperFacade.map(updateParcelStatus.getStatus(), ParcelStatus.class);
 
         parcelService.updateParcelStatus(parcelId, newStatus)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ResponseEntity.ok(updateParcelStatus);
+    }
+
+    @PutMapping("/parcels/{parcelId}/address")
+    public ResponseEntity<ChangeDeliveryAddressDto> changeDeliveryAddress(
+            @PathVariable String parcelId, @RequestBody ChangeDeliveryAddressDto changeDeliveryAddressDto) {
+
+        parcelService.changeDeliveryAddress(parcelId, changeDeliveryAddressDto.getReceiverCity(),
+                changeDeliveryAddressDto.getReceiverPostCode(), changeDeliveryAddressDto.getReceiverStreet())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        return ResponseEntity.ok(changeDeliveryAddressDto);
     }
 
     @PutMapping("/parcels/{parcelId}/name")

@@ -14,6 +14,7 @@ export class ParcelService {
   private PARCELS_URL = 'http://localhost:8080/parcelservice/v1/parcels';
   private STATUS = '/status';
   private HISTORY = '/history';
+  private ADDRESS = '//address';
   private NAME = '/name';
   private ACCESS = '/access';
 
@@ -43,6 +44,15 @@ export class ParcelService {
     this.logger.info('Getting parcel history {} from:  {}', parcelId, parcelURL);
 
     return this.httpClient.get<ParcelHistories>(parcelURL);
+  }
+
+  changeDeliveryAddress(parcelId: string, newReceiverCity: string, newReceiverPostCode: string, newReceiverStreet: string): Observable<Parcel> {
+    const parcelURL = this.PARCELS_URL + '/' + parcelId + this.ADDRESS;
+    const changeDeliveryAddressBody = {receiverCity: newReceiverCity, receiverPostCode: newReceiverPostCode, receiverStreet: newReceiverStreet};
+
+    this.logger.info('Changing parcel {} address to {}, from:  {}', parcelId, newReceiverCity, newReceiverPostCode, newReceiverStreet, parcelURL);
+
+    return this.httpClient.put<Parcel>(parcelURL, changeDeliveryAddressBody);
   }
 
   setParcelName(parcelId: string, newName: string): Observable<Parcel> {
