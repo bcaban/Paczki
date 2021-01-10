@@ -26,6 +26,10 @@ export class ParcelComponent implements OnInit {
   wasParcelSearched = false;
   wasParcelFound = false;
   wasParcelHistoryFound = false;
+  isBadStatus = false;
+  wasAddressChangeRequested = false;
+  wasAddressChanged = false;
+  isWrongAddressInput = false;
 
   isNameLengthTooShort = false;
   wasParcelNameChanged = false;
@@ -94,6 +98,42 @@ export class ParcelComponent implements OnInit {
         this.logger.info('Cannot find parcel history: {}', this.parcelId);
       }
     );
+  }
+
+  changeDeliveryAddress(receiverCity: string, receiverPostCode: string, receiverStreet: string): void {
+
+    if (this.parcel.status !== ParcelStatus.ID_ADDED) {
+      this.isBadStatus = true;
+    } else {
+      if (receiverCity.length === 0 || receiverPostCode.length === 0 || receiverPostCode.length < 6 ||
+        receiverPostCode.length > 6 || receiverStreet.length === 0) {
+        this.wasAddressChangeRequested = false;
+        this.wasAddressChanged = false;
+        this.isWrongAddressInput = true;
+      } else {
+        this.isWrongAddressInput = false;
+
+        this.logger.info('Changing parcel: {} address to {}', this.parcelId, receiverCity, receiverPostCode, receiverStreet);
+
+        this.parcelService.changeDeliveryAddress(this.parcelId, receiverCity, receiverPostCode, receiverStreet).subscribe(
+          result => {
+            this.wasAddressChangeRequested = true;
+            this.wasAddressChanged = true;
+
+            this.logger.info('Change parcel {} address to {}, from:  {}', this.parcelId, receiverCity, receiverPostCode, receiverStreet);
+
+            this.parcel.receiverCity = result.receiverCity;
+            this.parcel.receiverPostCode = result.receiverPostCode;
+            this.parcel.receiverStreet = result.receiverStreet;
+          },
+          error => {
+            this.wasAddressChangeRequested = true;
+
+            this.logger.info('Cannot change parcel {} address to: {}', this.parcelId, receiverCity, receiverPostCode, receiverStreet);
+          }
+        );
+      }
+    }
   }
 
   setNameOfParcel(name: string): void {
