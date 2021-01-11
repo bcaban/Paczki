@@ -5,7 +5,6 @@ import {HttpClient} from '@angular/common/http';
 import {NGXLogger} from 'ngx-logger';
 import {ParcelStatus} from '../common/parcel-status';
 import {ParcelHistories} from '../common/parcel-histories';
-import {ParcelHolder} from '../common/parcel-holder';
 
 @Injectable({
   providedIn: 'root'
