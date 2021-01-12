@@ -1,6 +1,8 @@
 package com.webappsbusters.parcelmanagement.controller;
 
 import com.webappsbusters.parcelmanagement.domain.*;
+import com.webappsbusters.parcelmanagement.service.DetermineSize;
+import com.webappsbusters.parcelmanagement.service.ParcelDeliveryTimeMock;
 import com.webappsbusters.parcelmanagement.service.ParcelService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,14 @@ import java.util.UUID;
 @RequestMapping("/v1")
 public class ParcelController {
 
+    private final DetermineSize determineSize;
     private final ParcelService parcelService;
     private final MapperFacade mapperFacade;
 
+
     @Autowired
-    public ParcelController(ParcelService parcelService, MapperFacade mapperFacade) {
+    public ParcelController(DetermineSize determineSize, ParcelService parcelService, MapperFacade mapperFacade) {
+        this.determineSize = determineSize;
         this.parcelService = parcelService;
         this.mapperFacade = mapperFacade;
     }
@@ -70,7 +75,15 @@ public class ParcelController {
     }
 
     //It will be helpful in the future
-    @PostMapping(value = "/parcels/saveParcel")
+    @PostMapping(value = "/parcels")
+    public ResponseEntity<ParcelDto> createParcel(@RequestBody ParcelDto parcelDto) {
+        Parcel parcel = mapperFacade.map(parcelDto, Parcel.class);
+        parcel.setStatus(ParcelStatus.ID_ADDED);
+        parcel.setSize(determineSize.calculateParcelSize(parcel.getLength(), parcel.getWidth(), parcel.getHeight()));
+        parcel.setTimeToDeliver(ParcelDeliveryTimeMock.mockTime(parcel.getStatus()));
+        return ResponseEntity.ok(mapperFacade.map(parcelService.saveParcel(parcel), ParcelDto.class));
+    }
+
     public void saveParcel() {
         Parcel parcel = Parcel.builder()
                 .status(ParcelStatus.ID_ADDED)

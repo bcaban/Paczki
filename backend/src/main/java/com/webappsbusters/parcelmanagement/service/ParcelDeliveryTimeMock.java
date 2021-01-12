@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @UtilityClass
 public class ParcelDeliveryTimeMock {
 
-    Duration mockTime(ParcelStatus status) {
+    public Duration mockTime(ParcelStatus status) {
         switch (status) {
             case ID_ADDED:
                 return Duration.ofDays(ThreadLocalRandom.current().nextInt(1, 3));

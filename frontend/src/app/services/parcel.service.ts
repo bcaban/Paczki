@@ -21,6 +21,14 @@ export class ParcelService {
   constructor(private httpClient: HttpClient, private logger: NGXLogger) {
   }
 
+  createParcel(parcel: Parcel): Observable<Parcel> {
+    const parcelURL = this.PARCELS_URL;
+
+    this.logger.info('Sending values to {}:', parcelURL);
+
+    return this.httpClient.post<Parcel>(parcelURL, parcel);
+  }
+
   getParcel(parcelId: string): Observable<Parcel> {
     const parcelURL = this.PARCELS_URL + '/' + parcelId;
 

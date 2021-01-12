@@ -1,5 +1,6 @@
 package com.webappsbusters.parcelmanagement.service;
 
+import com.webappsbusters.parcelmanagement.domain.ParcelDto;
 import com.webappsbusters.parcelmanagement.domain.Parcel;
 import com.webappsbusters.parcelmanagement.domain.ParcelHistory;
 import com.webappsbusters.parcelmanagement.domain.ParcelStatus;
@@ -49,8 +50,8 @@ public class ParcelService {
         return parcel;
     }
 
-    public void saveParcel(Parcel parcel) {
-        parcelRepository.save(parcel);
+    public Parcel saveParcel(Parcel parcel) {
+        return parcelRepository.save(parcel);
     }
 
     public Optional<Parcel> changeDeliveryAddress(String parcelId, String receiverCity, String receiverPostCode,
