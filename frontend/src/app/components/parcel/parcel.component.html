@@ -24,6 +24,11 @@
       <ng-template #parcelFound>
         <div class="d-flex justify-content-center">
           <div class="h2">
+            Nazwa: {{parcel.name}}
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="h2">
             Status: {{translatedParcelStatus}}
           </div>
         </div>
@@ -52,16 +57,16 @@
             Adres odbiorcy: {{parcel.receiverCity + ' ' + parcel.receiverStreet + ' ' + parcel.receiverPostCode}}
           </div>
         </div>
-
         <div class="d-flex justify-content-center">
           <div class="h3">
-            <ng-container *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact; else deliveredOrContact">
+            <ng-container
+              *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact; else deliveredOrContact">
 
               <ng-container *ngIf="daysToDeliver > 0; else today">
                 Otrzymasz paczkę za <b>{{daysToDeliver}}</b>
 
-                <ng-container *ngIf="daysToDeliver > 1; else oneDay"> dni </ng-container>
-                <ng-template #oneDay> dzień </ng-template>
+                <ng-container *ngIf="daysToDeliver > 1; else oneDay"> dni</ng-container>
+                <ng-template #oneDay> dzień</ng-template>
               </ng-container>
 
               <ng-template #today>Otrzymasz paczkę <b>dzisiaj</b></ng-template>
@@ -101,22 +106,19 @@
               <table class="table table-bordered table-striped text-center">
                 <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>DATA WPISU</th>
                   <th>STATUS</th>
-                  <th>TIMESTAMP</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let parcelHistory of parcelHistories.parcelHistory">
-                  <td>{{parcelHistory.id}}</td>
+                  <td>{{parcelHistory.timestamp | date: 'hh:mm dd/MM/yy':'UTC'}}</td>
                   <td>{{parcelHistory.status}}</td>
-                  <td>{{parcelHistory.timestamp}}</td>
                 </tr>
                 </tbody>
               </table>
             </div>
           </div>
-
         </ng-container>
 
         <ng-template #historyNotFound>
@@ -126,6 +128,50 @@
             </div>
           </div>
         </ng-template>
+
+        <div class="form-header">
+          <div class="h5">
+            Zmień nazwę paczki na:
+          </div>
+          <label>
+            <input #setInput class="au-input au-input-xl" type="text"
+                   placeholder="Wprowadź nazwe paczki..."
+                   (keyup.enter)="setNameOfParcel(setInput.value)"/>
+          </label>
+          <button class="au-btn-submit"
+                  (click)="setNameOfParcel(setInput.value)">
+            Zmień
+          </button>
+        </div>
+
+        <div *ngIf="isNameLengthTooShort;">
+          <div class="alert-danger">Nie zmieniono nazwy paczki, nazwa jest za krótka</div>
+        </div>
+
+        <div *ngIf="wasParcelNameChangeRequested">
+          <div *ngIf="wasParcelNameChanged; else parcelNameNotChanged">
+            <div class="alert-success">Poprawnie zmnieniono nazwę paczki</div>
+          </div>
+          <ng-template #parcelNameNotChanged>
+            <div class="alert-danger">Nie udało sie zmienić nazwy paczki, spróbuj ponownie</div>
+          </ng-template>
+        </div>
+
+        <!-- DO NOT REMOVE - adds some space after header! -->
+        <div class="pt-3">
+
+        </div>
+
+        <!-- DO NOT REMOVE - adds some space after header! -->
+        <div class="pt-3">
+
+        </div>
+        <!-- DO NOT REMOVE - adds some space after header! -->
+        <div class="pt-3">
+
+        </div>
+
+
       </ng-template>
 
       <ng-template #parcelNotFound>
@@ -141,6 +187,73 @@
         </div>
       </ng-template>
 
+      <div class="d-flex justify-content-center">
+        <div class="h4">
+          Zmień adres dostawy:
+        </div>
+      </div>
+
+      <div class="form-header">
+        <div class="h5">
+          Zmień nazwę miasta na:
+        </div>
+
+        <label>
+          <input #receiverCityInput class="au-input au-input-xl" type="text"
+                 placeholder="Wprowadź nazwę miasta..."
+          />
+        </label>
+
+        <div class="h5">
+          Zmień kod pocztowy na:
+        </div>
+
+        <label>
+          <input #receiverPostCodeInput class="au-input au-input-xl" type="text"
+                 placeholder="Wprowadź kod pocztowy..."
+          />
+        </label>
+
+        <div class="h5">
+          Zmień nazwę ulicy na:
+        </div>
+
+        <label>
+          <input #receiverStreetInput class="au-input au-input-xl" type="text"
+                 placeholder="Wprowadź nazwę ulicy..."
+          />
+        </label>
+
+        <button class="au-btn-submit"
+                (click)="changeDeliveryAddress(receiverCityInput.value, receiverPostCodeInput.value, receiverStreetInput.value)">
+          Zmień
+        </button>
+      </div>
+
+      <div *ngIf="isWrongAddressInput;">
+        <div class="alert-danger">Błędnie wprowadzono nowy adres dostawy</div>
+      </div>
+
+      <div *ngIf="wasAddressChangeRequested">
+        <div *ngIf="wasAddressChanged; else addressNotChanged">
+          <div class="alert-success">Poprawnie zmnieniono adres dostawy</div>
+        </div>
+        <ng-template #addressNotChanged>
+          <div class="alert-danger">Nie udało sie zmienić adresu dostawy, spróbuj ponownie</div>
+        </ng-template>
+      </div>
+
+      <div *ngIf="isBadStatus;">
+        <div class="alert-danger">
+          Przy obecnym statusie paczki nie ma możliwości zmiany adresu dostawy
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
+
+<!-- END PAGE CONTAINER-->
+<footer>
+  <app-footer></app-footer>
+</footer>

@@ -26,18 +26,18 @@ import { CreateParcelComponent } from './components/create-parcel/create-parcel.
     AdminPanelComponent,
     CreateParcelComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        NgbModule,
-        ReactiveFormsModule,
-        LoggerModule.forRoot({
-            serverLoggingUrl: '/api/logs',
-            level: NgxLoggerLevel.DEBUG,
-            serverLogLevel: NgxLoggerLevel.ERROR
-        })
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    NgbModule,
+    ReactiveFormsModule,
+    LoggerModule.forRoot({
+      serverLoggingUrl: '/api/logs',
+      level: NgxLoggerLevel.DEBUG,
+      serverLogLevel: NgxLoggerLevel.ERROR
+    })
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

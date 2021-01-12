@@ -62,6 +62,9 @@ public class Parcel {
     @Column(name = "timeToDeliver")
     private Duration timeToDeliver;
 
+    @Column(name = "name")
+    private String name;
+
     @OneToMany(
             targetEntity = ParcelHistory.class,
             mappedBy = "parcelId",
@@ -69,5 +72,9 @@ public class Parcel {
             fetch = FetchType.LAZY
     )
     private List<ParcelHistory> parcelHistories = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "parcelAccesses_id", referencedColumnName = "id")
+    private ParcelAccess parcelAccess; //TODO PAC-42 generate this on parcel create
 
 }

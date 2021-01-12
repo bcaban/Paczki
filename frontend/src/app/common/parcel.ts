@@ -1,4 +1,5 @@
 export class Parcel {
+  name: string;
   parcelId: string;
   status: string;
   senderCity: string;

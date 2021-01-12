@@ -2,7 +2,6 @@ package com.webappsbusters.parcelmanagement.service;
 
 import com.webappsbusters.parcelmanagement.domain.ParcelDto;
 import com.webappsbusters.parcelmanagement.domain.Parcel;
-import com.webappsbusters.parcelmanagement.domain.ParcelHistories;
 import com.webappsbusters.parcelmanagement.domain.ParcelHistory;
 import com.webappsbusters.parcelmanagement.domain.ParcelStatus;
 import com.webappsbusters.parcelmanagement.repository.ParcelRepository;
@@ -53,5 +52,28 @@ public class ParcelService {
 
     public Parcel saveParcel(Parcel parcel) {
         return parcelRepository.save(parcel);
+    }
+
+    public Optional<Parcel> changeDeliveryAddress(String parcelId, String receiverCity, String receiverPostCode,
+                                                  String receiverStreet) {
+
+        return getParcelById(parcelId)
+                .filter(parcel -> parcel.getStatus().equals(ParcelStatus.ID_ADDED))
+                .map(parcel -> {
+                    parcel.setReceiverCity(receiverCity);
+                    parcel.setReceiverPostCode(receiverPostCode);
+                    parcel.setReceiverStreet(receiverStreet);
+                    parcelRepository.save(parcel);
+                    return parcel;
+                });
+    }
+
+    public Optional<Parcel> changeName(String parcelId, String name) {
+        return getParcelById(parcelId)
+                .map(parcel -> {
+                    parcel.setName(name);
+                    parcelRepository.save(parcel);
+                    return parcel;
+                });
     }
 }

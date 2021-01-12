@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ParcelStatusTranslatorService } from './parcel-status-translator.service';
+import {ParcelStatusTranslatorService} from './parcel-status-translator.service';
 
 describe('ParcelStatusTranslatorService', () => {
   let service: ParcelStatusTranslatorService;

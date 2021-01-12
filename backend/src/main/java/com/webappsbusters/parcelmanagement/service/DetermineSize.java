@@ -1,5 +1,6 @@
 package com.webappsbusters.parcelmanagement.service;
-import com.webappsbusters.parcelmanagement.domain.*;
+
+import com.webappsbusters.parcelmanagement.domain.ParcelSize;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

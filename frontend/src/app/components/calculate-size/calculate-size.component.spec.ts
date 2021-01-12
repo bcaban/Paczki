@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CalculateSizeComponent } from './calculate-size.component';
+import {CalculateSizeComponent} from './calculate-size.component';
 
 describe('CalculateSizeComponent', () => {
   let component: CalculateSizeComponent;
@@ -8,9 +8,9 @@ describe('CalculateSizeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CalculateSizeComponent ]
+      declarations: [CalculateSizeComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

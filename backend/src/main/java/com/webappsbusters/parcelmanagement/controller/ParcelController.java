@@ -45,13 +45,33 @@ public class ParcelController {
     }
 
     @PutMapping("/parcels/{parcelId}/status")
-    public ResponseEntity<UpdateParcelStatusDto> updateStatus(@PathVariable String parcelId, @RequestBody UpdateParcelStatusDto updateParcelStatus) {
+    public ResponseEntity<UpdateParcelStatusDto> updateStatus(@PathVariable String parcelId,
+                                                              @RequestBody UpdateParcelStatusDto updateParcelStatus) {
         ParcelStatus newStatus = mapperFacade.map(updateParcelStatus.getStatus(), ParcelStatus.class);
 
         parcelService.updateParcelStatus(parcelId, newStatus)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ResponseEntity.ok(updateParcelStatus);
+    }
+
+    @PutMapping("/parcels/{parcelId}/address")
+    public ResponseEntity<ChangeDeliveryAddressDto> changeDeliveryAddress(
+            @PathVariable String parcelId, @RequestBody ChangeDeliveryAddressDto changeDeliveryAddressDto) {
+
+        parcelService.changeDeliveryAddress(parcelId, changeDeliveryAddressDto.getReceiverCity(),
+                changeDeliveryAddressDto.getReceiverPostCode(), changeDeliveryAddressDto.getReceiverStreet())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        return ResponseEntity.ok(changeDeliveryAddressDto);
+    }
+
+    @PutMapping("/parcels/{parcelId}/name")
+    public ResponseEntity<ParcelDto> changeParcelName(@PathVariable String parcelId, @RequestBody ChangeParcelNameDto changeParcelNameDto) {
+        Parcel parcel = parcelService.changeName(parcelId, changeParcelNameDto.getName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return ResponseEntity.ok(mapperFacade.map(parcel, ParcelDto.class));
     }
 
     //It will be helpful in the future
@@ -65,15 +85,31 @@ public class ParcelController {
     }
 
     public void saveParcel() {
-        Parcel parcel = Parcel.builder().status(ParcelStatus.ID_ADDED).height(15).length(12).receiverCity(
-                "Lodz").receiverPostCode("92-089").receiverStreet("Mala").senderCity("Warsaw").senderPostCode("98-987"
-        ).senderStreet("Wielka").size(ParcelSize.LARGE).timeToDeliver(Duration.ofDays(3L)).weightInKg(25).width(16).build();
+        Parcel parcel = Parcel.builder()
+                .status(ParcelStatus.ID_ADDED)
+                .height(15)
+                .length(12)
+                .receiverCity("Lodz")
+                .receiverPostCode("92-089")
+                .receiverStreet("Mala")
+                .senderCity("Warsaw")
+                .senderPostCode("98-987")
+                .senderStreet("Wielka")
+                .size(ParcelSize.LARGE)
+                .timeToDeliver(Duration.ofDays(3L))
+                .weightInKg(25).width(16)
+                .parcelAccess(ParcelAccess.builder()
+                        .adminCode("c1b2208e-dc02-4c4b-b290-d2bd1bac5b07")
+                        .clientCode("922bb15d-e772-485f-82c8-7bfc18e85677")
+                        .build())
+                .build();
 
         ParcelHistory parcelHistory = new ParcelHistory(1, ParcelStatus.ID_ADDED, LocalDateTime.now(), parcel);
         List<ParcelHistory> parcelHistories = new ArrayList<>();
         parcelHistories.add(parcelHistory);
         parcel.setParcelId(UUID.randomUUID().toString());
         parcel.setParcelHistories(parcelHistories);
+
 
         parcelService.saveParcel(parcel);
     }
