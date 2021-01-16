@@ -79,6 +79,10 @@ public class ParcelController {
     public ResponseEntity<ParcelDto> createParcel(@RequestBody ParcelDto parcelDto) {
         Parcel parcel = mapperFacade.map(parcelDto, Parcel.class);
         parcel.setStatus(ParcelStatus.ID_ADDED);
+        parcel.setParcelAccess(ParcelAccess.builder()
+                .adminCode("c1b2208e-dc02-4c4b-b290-d2bd1bac5b07")
+                .clientCode("922bb15d-e772-485f-82c8-7bfc18e85677")
+                .build());
         parcel.setSize(determineSize.calculateParcelSize(parcel.getLength(), parcel.getWidth(), parcel.getHeight()));
         parcel.setTimeToDeliver(ParcelDeliveryTimeMock.mockTime(parcel.getStatus()));
         return ResponseEntity.ok(mapperFacade.map(parcelService.saveParcel(parcel), ParcelDto.class));
