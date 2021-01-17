@@ -38,4 +38,18 @@ export class SearchComponent implements OnInit {
     );
   }
 
+  searchByName(parcelName: string, clientAccessCode: string): void {
+    this.parcelService.getParcelByNameAndClientAccessCode(parcelName, clientAccessCode).subscribe(
+      parcel => {
+        this.logger.info('Received parcel: {}', parcel);
+        this.router.navigateByUrl(`/search/${parcel.parcelId}`);
+      },
+      error => {
+        this.logger.info('Cannot find parcel for');
+
+        this.wasAccessChecked = true;
+        this.canAccessParcel = false;
+      }
+    );
+  }
 }

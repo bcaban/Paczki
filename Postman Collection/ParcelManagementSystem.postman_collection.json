@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "447af862-1e6e-4707-9bad-a6831d9e6743",
+		"_postman_id": "06f5b15f-7565-4ddb-b9e9-15b74f3869d7",
 		"name": "ParcelManagementSystem",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -123,6 +123,42 @@
 						"parcels",
 						"{{parcelId}}",
 						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Parcel By Name and Client Access Code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/parcelservice/v1/parcels?name=Test&accessCode=922bb15d-e772-485f-82c8-7bfc18e85677",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parcelservice",
+						"v1",
+						"parcels"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Test"
+						},
+						{
+							"key": "accessCode",
+							"value": "922bb15d-e772-485f-82c8-7bfc18e85677"
+						},
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
 					]
 				}
 			},
