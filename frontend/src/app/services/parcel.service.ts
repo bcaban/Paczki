@@ -37,6 +37,15 @@ export class ParcelService {
     return this.httpClient.get<Parcel>(parcelURL);
   }
 
+  cancelStatus(parcelId: string): Observable<Object> {
+    const parcelURL = this.PARCELS_URL + '/' + parcelId + this.STATUS;
+    const updateParcelBody = {status: ParcelStatus.CANCELLED};
+
+    this.logger.info('Cancelling parcel {} status to {} at:  {}', parcelId, parcelURL);
+
+    return this.httpClient.put<Object>(parcelURL, updateParcelBody);
+  }
+
   updateParcelStatus(parcelId: string, newStatus: ParcelStatus): Observable<Object> {
     const parcelURL = this.PARCELS_URL + '/' + parcelId + this.STATUS;
     const updateParcelBody = {status: newStatus};

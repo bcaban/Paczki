@@ -248,7 +248,32 @@
           Przy obecnym statusie paczki nie ma możliwości zmiany adresu dostawy
         </div>
       </div>
-
+      <!-- DO NOT REMOVE - adds some space! -->
+      <div class="pt-3"></div>
+      <div class="d-flex justify-content-center">
+        <div class="h4">
+          Anuluj paczkę
+        </div>
+        <button class="au-btn-submit"
+                (click)="cancelParcel(parcel.parcelId,parcel.status)">
+          Anuluj
+        </button>
+      </div>
+      <div *ngIf="wasCancelRequested">
+        <div *ngIf="wasCancelled; else notCancelled">
+          <div class="alert-success">Anulowano paczkę.</div>
+        </div>
+        <ng-template #notCancelled>
+          <div class="alert-danger">Nie udało sie anulować paczki.</div>
+        </ng-template>
+      </div>
+      <div *ngIf="cannotCancel;">
+        <div class="alert-danger">
+          Przy obecnym statusie nie można anulować paczki.
+        </div>
+      </div>
+      <!-- DO NOT REMOVE - adds some space! -->
+      <div class="pt-3"></div>
     </div>
   </div>
 </div>
