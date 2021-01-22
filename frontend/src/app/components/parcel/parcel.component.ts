@@ -104,16 +104,19 @@ export class ParcelComponent implements OnInit {
     );
   }
   cancelParcel(parcelId: string, parcelStatus: string): void {
-    if (parcelStatus !== ParcelStatus.ID_ADDED) {
-      this.cannotCancel = true;
-    } else {
-      this.parcelService.cancelStatus(parcelId).subscribe(
-        response => {
-          this.wasCancelRequested = true;
-          this.wasCancelled = true;
-          this.logger.info('Received response: {}', response);
-        },
-      );
+    const cancelyesno = confirm('Czy na pewno chcesz anulować paczkę?');
+    if (cancelyesno === true) {
+      if (parcelStatus !== ParcelStatus.ID_ADDED) {
+        this.cannotCancel = true;
+      } else {
+        this.parcelService.cancelStatus(parcelId).subscribe(
+          response => {
+            this.wasCancelRequested = true;
+            this.wasCancelled = true;
+            this.logger.info('Received response: {}', response);
+          },
+        );
+      }
     }
     }
   changeDeliveryAddress(receiverCity: string, receiverPostCode: string, receiverStreet: string): void {
