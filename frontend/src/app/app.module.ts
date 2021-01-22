@@ -8,12 +8,13 @@ import {FooterComponent} from './components/footer/footer.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HeaderMenuComponent} from './components/header-menu/header-menu.component';
 import {ParcelComponent} from './components/parcel/parcel.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { CalculateSizeComponent } from './components/calculate-size/calculate-size.component';
 import { CreateParcelComponent } from './components/create-parcel/create-parcel.component';
+import {DlDateTimeDateModule, DlDateTimePickerModule} from "angular-bootstrap-datetimepicker";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,10 @@ import { CreateParcelComponent } from './components/create-parcel/create-parcel.
       serverLoggingUrl: '/api/logs',
       level: NgxLoggerLevel.DEBUG,
       serverLogLevel: NgxLoggerLevel.ERROR
-    })
+    }),
+    DlDateTimeDateModule,  // <--- Determines the data type of the model
+    DlDateTimePickerModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

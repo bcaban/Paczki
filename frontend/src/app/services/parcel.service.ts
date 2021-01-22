@@ -105,4 +105,13 @@ export class ParcelService {
 
     return this.httpClient.get<Parcel>(parcelURL);
   }
+
+  changeTimeToDeliver(parcelId: string, newDaysLeft: number): Observable<Parcel> {
+    const parcelURL = this.PARCELS_URL + '/' + parcelId + '/timeToDeliver';
+    this.logger.info('Changing parcel {} time to deliver to {}', parcelId, newDaysLeft);
+
+    const newDate = { timeToDeliver: 'P' + newDaysLeft + 'D' };
+
+    return this.httpClient.put<Parcel>(parcelURL, newDate);
+  }
 }

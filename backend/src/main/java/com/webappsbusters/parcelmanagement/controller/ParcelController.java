@@ -89,6 +89,14 @@ public class ParcelController {
         return ResponseEntity.ok(mapperFacade.map(parcelService.saveParcel(parcel), ParcelDto.class));
     }
 
+    @PutMapping("/parcels/{parcelId}/timeToDeliver")
+    public ResponseEntity<ParcelDto> changeParcelTimeToDeliver(@PathVariable String parcelId, @RequestBody UpdateParcelTimeToDeliverDto updateParcelTimeToDeliverDto) {
+        Parcel parcel = parcelService.changeTimeToDelivery(parcelId, updateParcelTimeToDeliverDto.getTimeToDeliver())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return ResponseEntity.ok(mapperFacade.map(parcel, ParcelDto.class));
+    }
+
     public void saveParcel() {
         Parcel parcel = Parcel.builder()
                 .status(ParcelStatus.ID_ADDED)

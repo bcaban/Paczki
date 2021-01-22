@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -76,6 +77,15 @@ public class ParcelService {
         return getParcelById(parcelId)
                 .map(parcel -> {
                     parcel.setName(name);
+                    parcelRepository.save(parcel);
+                    return parcel;
+                });
+    }
+
+    public Optional<Parcel> changeTimeToDelivery (String parcelId, Duration timeToDelivery){
+        return getParcelById(parcelId)
+                .map(parcel -> {
+                    parcel.setTimeToDeliver(timeToDelivery);
                     parcelRepository.save(parcel);
                     return parcel;
                 });
