@@ -5,5 +5,6 @@ public enum ParcelStatusDto {
     IN_TRANSIT,
     OUT_FOR_DELIVERY,
     DELIVERED,
-    MISSING_IN_ACTION
+    MISSING_IN_ACTION,
+    CANCELLED
 }

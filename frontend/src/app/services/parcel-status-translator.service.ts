@@ -22,6 +22,8 @@ export class ParcelStatusTranslatorService {
         return 'dostarczona';
       case ParcelStatus.MISSING_IN_ACTION:
         return 'zaginęła w akcji';
+      case ParcelStatus.CANCELLED:
+        return 'paczka anulowana';
     }
 
     return '???';
