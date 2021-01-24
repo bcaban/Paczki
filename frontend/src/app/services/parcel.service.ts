@@ -98,4 +98,11 @@ export class ParcelService {
 
     return this.httpClient.post<ParcelAccess>(parcelURL, adminAccessBody);
   }
+
+  getParcelByNameAndClientAccessCode(name: string, clientAccessCode: string): Observable<Parcel> {
+    const parcelURL = this.PARCELS_URL + '?name=' + name + '&accessCode=' + clientAccessCode;
+    this.logger.info('Searching for parcel by name ' + name + ' with code ' + clientAccessCode + ' from ' + parcelURL);
+
+    return this.httpClient.get<Parcel>(parcelURL);
+  }
 }

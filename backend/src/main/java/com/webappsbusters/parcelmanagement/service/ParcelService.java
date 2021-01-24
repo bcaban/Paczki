@@ -1,6 +1,5 @@
 package com.webappsbusters.parcelmanagement.service;
 
-import com.webappsbusters.parcelmanagement.domain.ParcelDto;
 import com.webappsbusters.parcelmanagement.domain.Parcel;
 import com.webappsbusters.parcelmanagement.domain.ParcelHistory;
 import com.webappsbusters.parcelmanagement.domain.ParcelStatus;
@@ -27,6 +26,11 @@ public class ParcelService {
     public Optional<Parcel> getParcelById(final String id) {
         log.info("Searching for parcel of id: {}", id);
         return parcelRepository.findById(id);
+    }
+
+    public Optional<Parcel> getParcelByNameAndAccessCode(final String name, final String accessCode) {
+        log.info("Searching for parcel of name: {} and access code: {}", name, accessCode);
+        return parcelRepository.findByNameAndParcelAccessClientCode(name, accessCode);
     }
 
     //FIXME #1 in future we should introduce business-logic package with separate classes defining actions, for now
