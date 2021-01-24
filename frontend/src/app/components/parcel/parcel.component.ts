@@ -124,8 +124,7 @@ export class ParcelComponent implements OnInit {
     if (this.parcel.status !== ParcelStatus.ID_ADDED) {
       this.isBadStatus = true;
     } else {
-      if (receiverCity.length === 0 || receiverPostCode.length === 0 || receiverPostCode.length < 6 ||
-        receiverPostCode.length > 6 || receiverStreet.length === 0) {
+      if (receiverCity.length === 0 || receiverPostCode.length === 0 || receiverPostCode.length === 6 || receiverStreet.length === 0) {
         this.wasAddressChangeRequested = false;
         this.wasAddressChanged = false;
         this.isWrongAddressInput = true;

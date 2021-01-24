@@ -60,6 +60,104 @@
           <div class="alert-success" *ngIf="changeStatusEndedWithSuccess;">Status paczki został zmieniony</div>
         </div>
 
+
+        <div class="d-flex justify-content-center">
+          <div class="h2">
+            Zmień adres dostawy
+          </div>
+        </div>
+
+        <div class="form-header">
+          <label>
+            <input #deliverySearchInput class="au-input au-input-xl" type="text"
+                   placeholder="Wprowadź numer paczki..."
+                   (keydown)="clearResults()"
+                   (keypress)="clearResults()"
+                   (keyup)="clearResults()"
+                   (click)="clearResults()"
+            />
+          </label>
+          <label>
+            <input #deliveryAccessCodeInput class="au-input au-input-xl" type="text"
+                   placeholder="Wprowadź kod dostępu"
+                   (keydown)="clearResults()"
+                   (keypress)="clearResults()"
+                   (keyup)="clearResults()"
+                   (click)="clearResults()"
+            />
+          </label>
+        </div>
+
+        <div class="form-header">
+          <div class="h5">
+            Zmień nazwę miasta na:
+          </div>
+
+          <label>
+            <input #receiverCityInput class="au-input au-input-xl" type="text"
+                   placeholder="Wprowadź nazwę miasta..."
+            />
+          </label>
+
+          <div class="h5">
+            Zmień kod pocztowy na:
+          </div>
+
+          <label>
+            <input #receiverPostCodeInput class="au-input au-input-xl" type="text"
+                   placeholder="Wprowadź kod pocztowy..."
+            />
+          </label>
+
+          <div class="h5">
+            Zmień nazwę ulicy na:
+          </div>
+
+          <label>
+            <input #receiverStreetInput class="au-input au-input-xl" type="text"
+                   placeholder="Wprowadź nazwę ulicy..."
+            />
+          </label>
+
+          <div>
+            <button class="au-btn-submit"
+                    (click)="changeDeliveryAddress(deliverySearchInput.value, deliveryAccessCodeInput.value, receiverCityInput.value, receiverPostCodeInput.value, receiverStreetInput.value)">
+              Zmień
+            </button>
+          </div>
+
+        </div>
+
+        <!-- DO NOT REMOVE - adds some space! -->
+        <div class="pt-3"></div>
+
+        <div class="d-flex justify-content-center">
+          <div class="alert-danger" *ngIf="changeDeliveryAddressEndedWithError;">Zły numer paczki</div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="alert-danger" *ngIf="changeDeliveryAddressEndedWithErrorNoAccess;">Zły kod dostępu</div>
+        </div>
+
+        <div *ngIf="isWrongAddressInput;">
+          <div class="alert-danger">Błędnie wprowadzono nowy adres dostawy</div>
+        </div>
+
+        <div *ngIf="wasAddressChangeRequested">
+          <div *ngIf="wasAddressChanged; else addressNotChanged">
+            <div class="alert-success">Poprawnie zmnieniono adres dostawy</div>
+          </div>
+          <ng-template #addressNotChanged>
+            <div class="alert-danger">Nie udało sie zmienić adresu dostawy, spróbuj ponownie</div>
+          </ng-template>
+        </div>
+
+        <div *ngIf="isBadStatus;">
+          <div class="alert-danger">
+            Przy obecnym statusie paczki nie ma możliwości zmiany adresu dostawy
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
