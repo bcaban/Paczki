@@ -8,6 +8,7 @@ import 'moment-duration-format';
 import {ParcelStatus} from '../../common/parcel-status';
 import {ParcelStatusTranslatorService} from '../../services/parcel-status-translator.service';
 import {ParcelHistories} from '../../common/parcel-histories';
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-parcel',
@@ -38,9 +39,14 @@ export class ParcelComponent implements OnInit {
   isNameLengthTooShort = false;
   wasParcelNameChanged = false;
   wasParcelNameChangeRequested = false;
+  selectedDate = new Date();
+  wasParcelDateOfDeliverChanged = false;
+  wasParcelDateOfDeliverChangeRequested = false;
 
   constructor(private route: ActivatedRoute, private parcelService: ParcelService,
-              private parcelStatusTranslator: ParcelStatusTranslatorService, private logger: NGXLogger) {
+              private parcelStatusTranslator: ParcelStatusTranslatorService, private logger: NGXLogger,
+              private modalService: NgbModal
+  ) {
   }
 
   ngOnInit(): void {
@@ -177,5 +183,52 @@ export class ParcelComponent implements OnInit {
         }
       );
     }
+  }
+
+  open(content): void {
+    this.wasParcelDateOfDeliverChanged = false;
+    this.wasParcelDateOfDeliverChangeRequested = false;
+
+    this.modalService.open(content,
+      {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        if (result === 'DATE_PICKED') {
+          const diff = Math.abs(this.selectedDate.getTime() - new Date().getTime());
+          const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+
+          if (this.selectedDate < new Date()) {
+            this.wasParcelDateOfDeliverChangeRequested = true;
+            return;
+          }
+
+          if (diffDays < 0 || diffDays > 14) {
+            this.wasParcelDateOfDeliverChangeRequested = true;
+            return;
+          }
+
+          this.daysToDeliver = diffDays;
+
+          const today = new Date();
+          today.setDate(new Date().getDate() + diffDays);
+          this.expectedParcelDeliveryDate = today;
+
+          this.parcelService.changeTimeToDeliver(this.parcelId, diffDays).subscribe(
+            updated => {
+              this.wasParcelDateOfDeliverChanged = true;
+              this.wasParcelDateOfDeliverChangeRequested = true;
+              this.logger.info('Changed parcel {} time to deliver to {}', this.parcel, diffDays);
+
+              this.parcel.timeToDeliver = result.timeToDeliver;
+            },
+            error => {
+              this.wasParcelDateOfDeliverChangeRequested = true;
+              this.logger.info('Cannot change parcel {} time to deliver to: {}', this.parcelId, diffDays);
+            }
+          );
+        } else {
+          this.selectedDate = new Date();
+        }
+    }, (reason) => {
+      this.selectedDate = new Date();
+    });
   }
 }
