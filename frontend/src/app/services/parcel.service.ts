@@ -6,6 +6,7 @@ import {NGXLogger} from 'ngx-logger';
 import {ParcelStatus} from '../common/parcel-status';
 import {ParcelHistories} from '../common/parcel-histories';
 import {ParcelAccess} from '../common/parcel-access';
+import {ParcelAccessCode} from '../common/parcel-access-code';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class ParcelService {
   private ADDRESS = '//address';
   private NAME = '/name';
   private ACCESS = '/access';
+  private UPDATE_ACCESS = '/updateAccess';
 
   constructor(private httpClient: HttpClient, private logger: NGXLogger) {
   }
@@ -65,7 +67,11 @@ export class ParcelService {
 
   changeDeliveryAddress(parcelId: string, newReceiverCity: string, newReceiverPostCode: string, newReceiverStreet: string): Observable<Parcel> {
     const parcelURL = this.PARCELS_URL + '/' + parcelId + this.ADDRESS;
-    const changeDeliveryAddressBody = {receiverCity: newReceiverCity, receiverPostCode: newReceiverPostCode, receiverStreet: newReceiverStreet};
+    const changeDeliveryAddressBody = {
+      receiverCity: newReceiverCity,
+      receiverPostCode: newReceiverPostCode,
+      receiverStreet: newReceiverStreet
+    };
 
     this.logger.info('Changing parcel {} address to {}, from:  {}', parcelId, newReceiverCity, newReceiverPostCode, newReceiverStreet, parcelURL);
 
@@ -83,7 +89,7 @@ export class ParcelService {
 
   getParcelAccessStatusClient(parcelId: string, clientAccessCode: string): Observable<ParcelAccess> {
     const parcelURL = this.PARCELS_URL + '/' + parcelId + this.ACCESS;
-    const clientAccessBody = { clientCode: clientAccessCode };
+    const clientAccessBody = {clientCode: clientAccessCode};
 
     this.logger.info('Checking access status for parcel ' + parcelId + ' with code ' + clientAccessCode + ' from ' + parcelURL);
 
@@ -92,11 +98,20 @@ export class ParcelService {
 
   getParcelAccessStatusAdmin(parcelId: string, adminAccessCode: string): Observable<ParcelAccess> {
     const parcelURL = this.PARCELS_URL + '/' + parcelId + this.ACCESS;
-    const adminAccessBody = { adminCode: adminAccessCode };
+    const adminAccessBody = {adminCode: adminAccessCode};
 
     this.logger.info('Checking access status for parcel ' + parcelId + ' with code ' + adminAccessCode + ' from ' + parcelURL);
 
     return this.httpClient.post<ParcelAccess>(parcelURL, adminAccessBody);
+  }
+
+  updateParcelClientCode(parcelId: string): Observable<ParcelAccessCode> {
+    const parcelURL = this.PARCELS_URL + '/' + parcelId + this.UPDATE_ACCESS;
+    const clientAccessBody = {clientCode: '1234'};
+
+    this.logger.info('Update client access code for parcel ' + parcelId + ' from ' + parcelURL);
+
+    return this.httpClient.put<ParcelAccessCode>(parcelURL, clientAccessBody);
   }
 
   getParcelByNameAndClientAccessCode(name: string, clientAccessCode: string): Observable<Parcel> {
@@ -110,7 +125,7 @@ export class ParcelService {
     const parcelURL = this.PARCELS_URL + '/' + parcelId + '/timeToDeliver';
     this.logger.info('Changing parcel {} time to deliver to {}', parcelId, newDaysLeft);
 
-    const newDate = { timeToDeliver: 'P' + newDaysLeft + 'D' };
+    const newDate = {timeToDeliver: 'P' + newDaysLeft + 'D'};
 
     return this.httpClient.put<Parcel>(parcelURL, newDate);
   }
