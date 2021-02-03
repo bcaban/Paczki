@@ -3,6 +3,7 @@ import {ParcelService} from '../../services/parcel.service';
 import {ParcelStatus} from '../../common/parcel-status';
 import {NGXLogger} from 'ngx-logger';
 import {Parcel} from '../../common/parcel';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-panel',
@@ -22,8 +23,11 @@ export class AdminPanelComponent implements OnInit {
   wasAddressChangeRequested = false;
   wasAddressChanged = false;
   isWrongAddressInput = false;
+  getDeliveryAddressEndedWithErrorNoAccess = false;
+  getDeliveryAddressEndedWithError = false;
+  getDeliveryAddressWithSuccess = false;
 
-  constructor(private parcelService: ParcelService, private logger: NGXLogger) {
+  constructor(private router: Router, private parcelService: ParcelService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
@@ -113,6 +117,31 @@ export class AdminPanelComponent implements OnInit {
       error => {
         this.logger.info('No parcel of id: {}', parcelId);
         this.changeDeliveryAddressEndedWithError = true;
+      }
+    );
+  }
+
+  getDeliveryAddress(parcelId: string, accessCode: string): void {
+    this.getDeliveryAddressWithSuccess = false;
+    this.getDeliveryAddressEndedWithError = false;
+    this.parcelService.getParcelAccessStatusAdmin(parcelId, accessCode).subscribe(
+      accessStatus => {
+        this.logger.info('Received response: {}', accessStatus);
+
+        if (accessStatus.access.toLocaleLowerCase() === 'denied') {
+          this.getDeliveryAddressEndedWithErrorNoAccess = true;
+        } else {
+          const newRelativeUrl = this.router.createUrlTree(['/search/' + parcelId]);
+          const baseUrl = window.location.href.replace(this.router.url, '');
+          window.open(baseUrl + newRelativeUrl, '_blank');
+
+          this.getDeliveryAddressWithSuccess = true;
+        }
+      },
+      error => {
+        this.logger.info('No parcel of id: {}', parcelId);
+        this.getDeliveryAddressEndedWithError = true;
+        this.getDeliveryAddressWithSuccess = false;
       }
     );
   }
