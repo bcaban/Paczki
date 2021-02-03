@@ -6,8 +6,14 @@ import {AdminPanelComponent} from './components/admin-panel/admin-panel.componen
 import { CalculateSizeComponent } from './components/calculate-size/calculate-size.component';
 import {CreateParcelComponent} from './components/create-parcel/create-parcel.component';
 import {UpdateAccessComponent} from './components/update-access/update-access.component';
+import {ContactComponent} from './components/contact/contact.component';
+import {ServicesComponent} from './components/company-services/services.component';
+import {AboutUsComponent} from './components/about-us/about-us.component';
 
 const routes: Routes = [
+  {path: 'about-us', component: AboutUsComponent},
+  {path: 'company-services', component: ServicesComponent},
+  {path: 'contact', component: ContactComponent},
   {path: 'create-parcel/postsml', component: CreateParcelComponent},
   {path: 'calculate-size/ifsml', component: CalculateSizeComponent},
   {path: 'update-access', component: UpdateAccessComponent},
