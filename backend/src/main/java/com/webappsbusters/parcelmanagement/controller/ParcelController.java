@@ -22,14 +22,12 @@ import java.util.UUID;
 @RequestMapping("/v1")
 public class ParcelController {
 
-    private final DetermineSize determineSize;
     private final ParcelService parcelService;
     private final MapperFacade mapperFacade;
 
 
     @Autowired
-    public ParcelController(DetermineSize determineSize, ParcelService parcelService, MapperFacade mapperFacade) {
-        this.determineSize = determineSize;
+    public ParcelController(ParcelService parcelService, MapperFacade mapperFacade) {
         this.parcelService = parcelService;
         this.mapperFacade = mapperFacade;
     }
@@ -74,18 +72,10 @@ public class ParcelController {
         return ResponseEntity.ok(mapperFacade.map(parcel, ParcelDto.class));
     }
 
-    //It will be helpful in the future
     @PostMapping(value = "/parcels")
     public ResponseEntity<ParcelDto> createParcel(@RequestBody ParcelDto parcelDto) {
         Parcel parcel = mapperFacade.map(parcelDto, Parcel.class);
-        parcel.setStatus(ParcelStatus.ID_ADDED);
-        parcel.getParcelHistories().add(ParcelHistory.builder().parcelId(parcel).status(ParcelStatus.ID_ADDED).timestamp(LocalDateTime.now()).build());
-        parcel.setParcelAccess(ParcelAccess.builder()
-                .adminCode("c1b2208e-dc02-4c4b-b290-d2bd1bac5b07")
-                .clientCode("922bb15d-e772-485f-82c8-7bfc18e85677")
-                .build());
-        parcel.setSize(determineSize.calculateParcelSize(parcel.getLength(), parcel.getWidth(), parcel.getHeight()));
-        parcel.setTimeToDeliver(ParcelDeliveryTimeMock.mockTime(parcel.getStatus()));
+
         return ResponseEntity.ok(mapperFacade.map(parcelService.saveParcel(parcel), ParcelDto.class));
     }
 
@@ -95,35 +85,5 @@ public class ParcelController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ResponseEntity.ok(mapperFacade.map(parcel, ParcelDto.class));
-    }
-
-    public void saveParcel() {
-        Parcel parcel = Parcel.builder()
-                .status(ParcelStatus.ID_ADDED)
-                .height(15)
-                .length(12)
-                .receiverCity("Lodz")
-                .receiverPostCode("92-089")
-                .receiverStreet("Mala")
-                .senderCity("Warsaw")
-                .senderPostCode("98-987")
-                .senderStreet("Wielka")
-                .size(ParcelSize.LARGE)
-                .timeToDeliver(Duration.ofDays(3L))
-                .weightInKg(25).width(16)
-                .parcelAccess(ParcelAccess.builder()
-                        .adminCode("c1b2208e-dc02-4c4b-b290-d2bd1bac5b07")
-                        .clientCode("922bb15d-e772-485f-82c8-7bfc18e85677")
-                        .build())
-                .build();
-
-        ParcelHistory parcelHistory = new ParcelHistory(1, ParcelStatus.ID_ADDED, LocalDateTime.now(), parcel);
-        List<ParcelHistory> parcelHistories = new ArrayList<>();
-        parcelHistories.add(parcelHistory);
-        parcel.setParcelId(UUID.randomUUID().toString());
-        parcel.setParcelHistories(parcelHistories);
-
-
-        parcelService.saveParcel(parcel);
     }
 }
