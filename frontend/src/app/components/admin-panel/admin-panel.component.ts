@@ -134,50 +134,59 @@ export class AdminPanelComponent implements OnInit {
     this.wasAddressChangeRequested = false;
     this.isWrongAddressInput = false;
   }
-  open(content, parcelId): void {
+  open(content, parcelId, accessCode): void {
     this.wasParcelDateOfDeliverChanged = false;
     this.wasParcelDateOfDeliverChangeRequested = false;
+    this.parcelService.getParcelAccessStatusAdmin(parcelId, accessCode).subscribe(
+      accessStatus => {
+        this.logger.info('Received response: {}', accessStatus);
 
-    this.modalService.open(content,
-      {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      if (result === 'DATE_PICKED') {
-        const diff = Math.abs(this.selectedDate.getTime() - new Date().getTime());
-        const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+        if (accessStatus.access.toLocaleLowerCase() === 'denied') {
+          this.changeDeliveryAddressEndedWithErrorNoAccess = true;
+        } else {
+          this.modalService.open(content,
+            {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+            if (result === 'DATE_PICKED') {
+              const diff = Math.abs(this.selectedDate.getTime() - new Date().getTime());
+              const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
 
-        if (this.selectedDate < new Date()) {
-          this.wasParcelDateOfDeliverChangeRequested = true;
-          return;
+              if (this.selectedDate < new Date()) {
+                this.wasParcelDateOfDeliverChangeRequested = true;
+                return;
+              }
+
+              if (diffDays < 0 || diffDays > 14) {
+                this.wasParcelDateOfDeliverChangeRequested = true;
+                return;
+              }
+
+              this.daysToDeliver = diffDays;
+
+              const today = new Date();
+              today.setDate(new Date().getDate() + diffDays);
+              this.expectedParcelDeliveryDate = today;
+
+              this.parcelService.changeTimeToDeliver(parcelId, diffDays).subscribe(
+                updated => {
+                  this.wasParcelDateOfDeliverChanged = true;
+                  this.wasParcelDateOfDeliverChangeRequested = true;
+                  this.logger.info('Changed parcel {} time to deliver to {}', this.parcel, diffDays);
+
+                  this.parcel.timeToDeliver = result.timeToDeliver;
+                },
+                error => {
+                  this.wasParcelDateOfDeliverChangeRequested = true;
+                  this.logger.info('Cannot change parcel {} time to deliver to: {}', parcelId, diffDays);
+                }
+              );
+            } else {
+              this.selectedDate = new Date();
+            }
+          }, (reason) => {
+            this.selectedDate = new Date();
+          });
         }
-
-        if (diffDays < 0 || diffDays > 14) {
-          this.wasParcelDateOfDeliverChangeRequested = true;
-          return;
-        }
-
-        this.daysToDeliver = diffDays;
-
-        const today = new Date();
-        today.setDate(new Date().getDate() + diffDays);
-        this.expectedParcelDeliveryDate = today;
-
-        this.parcelService.changeTimeToDeliver(parcelId, diffDays).subscribe(
-          updated => {
-            this.wasParcelDateOfDeliverChanged = true;
-            this.wasParcelDateOfDeliverChangeRequested = true;
-            this.logger.info('Changed parcel {} time to deliver to {}', this.parcel, diffDays);
-
-            this.parcel.timeToDeliver = result.timeToDeliver;
-          },
-          error => {
-            this.wasParcelDateOfDeliverChangeRequested = true;
-            this.logger.info('Cannot change parcel {} time to deliver to: {}', parcelId, diffDays);
-          }
-        );
-      } else {
-        this.selectedDate = new Date();
       }
-    }, (reason) => {
-      this.selectedDate = new Date();
-    });
-  }
+    );
+}
 }
