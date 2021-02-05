@@ -67,26 +67,26 @@
           </div>
         </div>
 
-        <div class="form-header">
-          <label>
-            <input #deliverySearchInput class="au-input au-input-xl" type="text"
-                   placeholder="Wprowadź numer paczki..."
-                   (keydown)="clearResults()"
-                   (keypress)="clearResults()"
-                   (keyup)="clearResults()"
-                   (click)="clearResults()"
-            />
-          </label>
-          <label>
-            <input #deliveryAccessCodeInput class="au-input au-input-xl" type="text"
-                   placeholder="Wprowadź kod dostępu"
-                   (keydown)="clearResults()"
-                   (keypress)="clearResults()"
-                   (keyup)="clearResults()"
-                   (click)="clearResults()"
-            />
-          </label>
-        </div>
+<!--        <div class="form-header">-->
+<!--          <label>-->
+<!--            <input #deliverySearchInput class="au-input au-input-xl" type="text"-->
+<!--                   placeholder="Wprowadź numer paczki..."-->
+<!--                   (keydown)="clearResults()"-->
+<!--                   (keypress)="clearResults()"-->
+<!--                   (keyup)="clearResults()"-->
+<!--                   (click)="clearResults()"-->
+<!--            />-->
+<!--          </label>-->
+<!--          <label>-->
+<!--            <input #deliveryAccessCodeInput class="au-input au-input-xl" type="text"-->
+<!--                   placeholder="Wprowadź kod dostępu"-->
+<!--                   (keydown)="clearResults()"-->
+<!--                   (keypress)="clearResults()"-->
+<!--                   (keyup)="clearResults()"-->
+<!--                   (click)="clearResults()"-->
+<!--            />-->
+<!--          </label>-->
+<!--        </div>-->
 
         <div class="form-header">
           <div class="h5">
@@ -121,7 +121,7 @@
 
           <div>
             <button class="au-btn-submit"
-                    (click)="changeDeliveryAddress(deliverySearchInput.value, deliveryAccessCodeInput.value, receiverCityInput.value, receiverPostCodeInput.value, receiverStreetInput.value)">
+                    (click)="changeDeliveryAddress(searchInput.value, accessCodeInput.value, receiverCityInput.value, receiverPostCodeInput.value, receiverStreetInput.value)">
               Zmień
             </button>
           </div>
@@ -164,6 +164,6 @@
 </div>
 
 <!-- END PAGE CONTAINER-->
-<footer>
-  <app-footer></app-footer>
-</footer>
+<!--<footer>-->
+<!--  <app-footer></app-footer>-->
+<!--</footer>-->
