@@ -134,7 +134,7 @@ export class AdminPanelComponent implements OnInit {
     this.wasAddressChangeRequested = false;
     this.isWrongAddressInput = false;
   }
-  open(content): void {
+  open(content, parcelId): void {
     this.wasParcelDateOfDeliverChanged = false;
     this.wasParcelDateOfDeliverChangeRequested = false;
 
@@ -160,7 +160,7 @@ export class AdminPanelComponent implements OnInit {
         today.setDate(new Date().getDate() + diffDays);
         this.expectedParcelDeliveryDate = today;
 
-        this.parcelService.changeTimeToDeliver(this.parcelId, diffDays).subscribe(
+        this.parcelService.changeTimeToDeliver(parcelId, diffDays).subscribe(
           updated => {
             this.wasParcelDateOfDeliverChanged = true;
             this.wasParcelDateOfDeliverChangeRequested = true;
@@ -170,7 +170,7 @@ export class AdminPanelComponent implements OnInit {
           },
           error => {
             this.wasParcelDateOfDeliverChangeRequested = true;
-            this.logger.info('Cannot change parcel {} time to deliver to: {}', this.parcelId, diffDays);
+            this.logger.info('Cannot change parcel {} time to deliver to: {}', parcelId, diffDays);
           }
         );
       } else {
