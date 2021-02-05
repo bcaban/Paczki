@@ -23,6 +23,9 @@ public class ParcelAccessService {
         return parcelService.getParcelById(parcelId)
                 .map(parcel -> checkAccess(parcel, parcelAccessCodes));
     }
+    public String getClientCode(Parcel parcel) {
+        return parcel.getParcelAccess().getClientCode();
+    }
 
     private ParcelAccessStatus checkAccess(Parcel parcel, ParcelAccessCodes parcelAccessCodes) {
         if (Objects.isNull(parcel.getParcelAccess())) {

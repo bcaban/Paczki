@@ -1,6 +1,7 @@
 package com.webappsbusters.parcelmanagement.controller;
 
 import com.webappsbusters.parcelmanagement.domain.*;
+import com.webappsbusters.parcelmanagement.service.ParcelAccessService;
 import com.webappsbusters.parcelmanagement.service.DetermineSize;
 import com.webappsbusters.parcelmanagement.service.ParcelDeliveryTimeMock;
 import com.webappsbusters.parcelmanagement.service.ParcelService;
@@ -24,13 +25,15 @@ public class ParcelController {
 
     private final DetermineSize determineSize;
     private final ParcelService parcelService;
+    private final ParcelAccessService parcelAccessService;
     private final MapperFacade mapperFacade;
 
 
     @Autowired
-    public ParcelController(DetermineSize determineSize, ParcelService parcelService, MapperFacade mapperFacade) {
+    public ParcelController(DetermineSize determineSize, ParcelService parcelService, ParcelAccessService parcelAccessService, MapperFacade mapperFacade) {
         this.determineSize = determineSize;
         this.parcelService = parcelService;
+        this.parcelAccessService = parcelAccessService;
         this.mapperFacade = mapperFacade;
     }
 
@@ -42,6 +45,11 @@ public class ParcelController {
         ParcelDto parcelDto = mapperFacade.map(parcel, ParcelDto.class);
 
         return ResponseEntity.ok(parcelDto);
+    }
+
+    @GetMapping(value = "parcels/{parcelId}/clientcode")
+    public String getClientCode(@PathVariable Parcel parcel) {
+        return parcelAccessService.getClientCode(parcel);
     }
 
     @PutMapping("/parcels/{parcelId}/status")
@@ -74,7 +82,6 @@ public class ParcelController {
         return ResponseEntity.ok(mapperFacade.map(parcel, ParcelDto.class));
     }
 
-    //It will be helpful in the future
     @PostMapping(value = "/parcels")
     public ResponseEntity<ParcelDto> createParcel(@RequestBody ParcelDto parcelDto) {
         Parcel parcel = mapperFacade.map(parcelDto, Parcel.class);
