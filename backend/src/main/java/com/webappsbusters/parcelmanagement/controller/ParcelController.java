@@ -47,11 +47,6 @@ public class ParcelController {
         return ResponseEntity.ok(parcelDto);
     }
 
-    @GetMapping(value = "parcels/{parcelId}/clientcode")
-    public String getClientCode(@PathVariable Parcel parcel) {
-        return parcelAccessService.getClientCode(parcel);
-    }
-
     @PutMapping("/parcels/{parcelId}/status")
     public ResponseEntity<UpdateParcelStatusDto> updateStatus(@PathVariable String parcelId,
                                                               @RequestBody UpdateParcelStatusDto updateParcelStatus) {

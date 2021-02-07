@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
 import {NGXLogger} from 'ngx-logger';
 import {Parcel} from '../../common/parcel';
 import {ParcelService} from '../../services/parcel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {ParcelAccess} from '../../common/parcel-access';
 
 @Component({
   selector: 'app-create-parcel',
@@ -15,7 +13,7 @@ import {ParcelAccess} from '../../common/parcel-access';
 export class CreateParcelComponent implements OnInit {
   response: string;
   ID: string;
-  PASS: Observable<ParcelAccess>;
+  PASS: string;
   size: string;
   registerForm: FormGroup;
   submitted = false;
@@ -47,7 +45,7 @@ export class CreateParcelComponent implements OnInit {
           } else {
             this.response = 'Paczka została nadana.';
             this.ID = response.parcelId;
-            this.PASS = this.parcelService.getClientCode(response.parcelId);
+            this.PASS = response.parcelAccess.clientCode;
             this.size = response.size;
           }
           this.logger.info('Received response: {}', response);

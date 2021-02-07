@@ -13,7 +13,6 @@ import {ParcelAccess} from '../common/parcel-access';
 export class ParcelService {
   private PARCELS_URL = 'http://localhost:8080/parcelservice/v1/parcels';
   private STATUS = '/status';
-  private CLIENTCODE = '/clientcode';
   private HISTORY = '/history';
   private ADDRESS = '//address';
   private NAME = '/name';
@@ -80,10 +79,6 @@ export class ParcelService {
     this.logger.info('Changing parcel {} name to: {}, from: {}', parcelId, name, parcelURL);
 
     return this.httpClient.put<Parcel>(parcelURL, changeParcelNameBody);
-  }
-  getClientCode(parcelId: string): Observable<ParcelAccess> {
-    const parcelURL = this.PARCELS_URL + '/' + parcelId + this.CLIENTCODE;
-    return this.httpClient.get<ParcelAccess>(parcelURL);
   }
 
   getParcelAccessStatusClient(parcelId: string, clientAccessCode: string): Observable<ParcelAccess> {
