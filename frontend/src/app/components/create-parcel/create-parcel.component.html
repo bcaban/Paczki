@@ -90,10 +90,12 @@
           </div>
           </div>
         </form>
+        </div>
+        <div *ngIf="response === 'Paczka została nadana.'">
           <div class="h6">
-            <div>ID twojej paczki: {{ID}}</div>
-            <div>Hasło do twojej paczki: {{PASS}}</div>
-            <div>Rozmiar: {{size}}</div>
+            <div class="alert-info">ID twojej paczki: {{ID}}</div>
+            <div class="alert-primary">Hasło do twojej paczki: {{PASS}}</div>
+            <div class="alert-dark">Rozmiar: {{size}}</div>
           </div>
         </div>
         <div class="But">
