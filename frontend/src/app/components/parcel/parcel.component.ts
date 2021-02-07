@@ -34,7 +34,7 @@ export class ParcelComponent implements OnInit {
   cannotCancel = false;
   wasCancelRequested = false;
   wasCancelled = false;
-  notCancelled = false;
+  statusCancelled = ParcelStatus.CANCELLED;
 
   isNameLengthTooShort = false;
   wasParcelNameChanged = false;
