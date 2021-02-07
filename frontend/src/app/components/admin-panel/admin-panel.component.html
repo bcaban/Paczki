@@ -67,26 +67,26 @@
           </div>
         </div>
 
-        <div class="form-header">
-          <label>
-            <input #deliverySearchInput class="au-input au-input-xl" type="text"
-                   placeholder="Wprowadź numer paczki..."
-                   (keydown)="clearResults()"
-                   (keypress)="clearResults()"
-                   (keyup)="clearResults()"
-                   (click)="clearResults()"
-            />
-          </label>
-          <label>
-            <input #deliveryAccessCodeInput class="au-input au-input-xl" type="text"
-                   placeholder="Wprowadź kod dostępu"
-                   (keydown)="clearResults()"
-                   (keypress)="clearResults()"
-                   (keyup)="clearResults()"
-                   (click)="clearResults()"
-            />
-          </label>
-        </div>
+<!--        <div class="form-header">-->
+<!--          <label>-->
+<!--            <input #deliverySearchInput class="au-input au-input-xl" type="text"-->
+<!--                   placeholder="Wprowadź numer paczki..."-->
+<!--                   (keydown)="clearResults()"-->
+<!--                   (keypress)="clearResults()"-->
+<!--                   (keyup)="clearResults()"-->
+<!--                   (click)="clearResults()"-->
+<!--            />-->
+<!--          </label>-->
+<!--          <label>-->
+<!--            <input #deliveryAccessCodeInput class="au-input au-input-xl" type="text"-->
+<!--                   placeholder="Wprowadź kod dostępu"-->
+<!--                   (keydown)="clearResults()"-->
+<!--                   (keypress)="clearResults()"-->
+<!--                   (keyup)="clearResults()"-->
+<!--                   (click)="clearResults()"-->
+<!--            />-->
+<!--          </label>-->
+<!--        </div>-->
 
         <div class="form-header">
           <div class="h5">
@@ -121,7 +121,7 @@
 
           <div>
             <button class="au-btn-submit"
-                    (click)="changeDeliveryAddress(deliverySearchInput.value, deliveryAccessCodeInput.value, receiverCityInput.value, receiverPostCodeInput.value, receiverStreetInput.value)">
+                    (click)="changeDeliveryAddress(searchInput.value, accessCodeInput.value, receiverCityInput.value, receiverPostCodeInput.value, receiverStreetInput.value)">
               Zmień
             </button>
           </div>
@@ -157,13 +157,75 @@
             Przy obecnym statusie paczki nie ma możliwości zmiany adresu dostawy
           </div>
         </div>
+        <div class="pt-3">
 
-      </div>
+        </div>
+        <div *ngIf="wasParcelDateOfDeliverChangeRequested;">
+          <div *ngIf="wasParcelDateOfDeliverChanged; else parcelDateOfDeliveryNotChanged">
+            <div class="alert-success">Pomyślnie zmieniono date
+            </div>
+          </div>
+        </div>
+        <ng-template #parcelDateOfDeliveryNotChanged>
+          <div class="alert-danger">Nie udało się zmienić daty
+          </div>
+        </ng-template>
+        <div class="pt-3">
+
+        </div>
+
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-lg btn-outline-primary"
+                    (click)="open(content, searchInput.value, accessCodeInput.value)">
+              Zmień termin dostawy
+            </button>
+          </div>
+          <div class="pt-3">
+
+          </div>
     </div>
   </div>
 </div>
-
+</div>
 <!-- END PAGE CONTAINER-->
-<footer>
-  <app-footer></app-footer>
-</footer>
+<!--<footer>-->
+<!--  <app-footer></app-footer>-->
+<!--</footer>-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title"
+        id="modal-basic-title">
+      Wybierz datę
+    </h4>
+    <button type="button" class="close"
+            aria-label="Close" (click)=
+              "modal.dismiss('Cross click')">
+
+            <span aria-hidden="true">
+                ×
+            </span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <dl-date-time-picker
+      maxView="year"
+      minView="day"
+      startView="day"
+      minuteStep="1"
+      [(ngModel)]="selectedDate"
+    >
+    </dl-date-time-picker>
+  </div>
+  <div class="modal-footer">
+    <button type="button"
+            class="btn btn-outline-dark"
+            (click)="modal.close('CANCELED')">
+      Anuluj
+    </button>
+    <button type="button"
+            class="btn btn-danger"
+            (click)="modal.close('DATE_PICKED')">
+      Wybierz
+    </button>
+  </div>
+</ng-template>
