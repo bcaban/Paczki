@@ -1,15 +1,16 @@
 package com.webappsbusters.parcelmanagement.service;
 
-import com.webappsbusters.parcelmanagement.domain.Parcel;
-import com.webappsbusters.parcelmanagement.domain.ParcelAccessCodes;
-import com.webappsbusters.parcelmanagement.domain.ParcelAccessStatus;
+import com.webappsbusters.parcelmanagement.domain.*;
+import com.webappsbusters.parcelmanagement.repository.ParcelRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -17,6 +18,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ParcelAccessService {
     private final ParcelService parcelService;
+    private final ParcelRepository parcelRepository;
 
     public Optional<ParcelAccessStatus> checkAccess(String parcelId, ParcelAccessCodes parcelAccessCodes) {
         log.info("Checking access status of parcel {}", parcelId);
@@ -40,5 +42,16 @@ public class ParcelAccessService {
         }
 
         return ParcelAccessStatus.DENIED;
+    }
+
+    public Optional<Parcel> updateParcelClientCode(String parcelId) {
+        String clientCode = UUID.randomUUID().toString();
+
+        return parcelService.getParcelById(parcelId)
+                .map(parcel -> {
+                    parcel.getParcelAccess().setClientCode(clientCode);
+                    parcelRepository.save(parcel);
+                    return parcel;
+                });
     }
 }

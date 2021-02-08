@@ -1,6 +1,7 @@
 package com.webappsbusters.parcelmanagement.service;
 
 import com.webappsbusters.parcelmanagement.domain.Parcel;
+import com.webappsbusters.parcelmanagement.domain.ParcelAccess;
 import com.webappsbusters.parcelmanagement.domain.ParcelHistory;
 import com.webappsbusters.parcelmanagement.domain.ParcelStatus;
 import com.webappsbusters.parcelmanagement.repository.ParcelRepository;
@@ -12,16 +13,19 @@ import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
 @Slf4j
 public class ParcelService {
     private final ParcelRepository parcelRepository;
+    private final DetermineSize determineSize;
 
     @Autowired
-    public ParcelService(ParcelRepository parcelRepository) {
+    public ParcelService(ParcelRepository parcelRepository, DetermineSize determineSize) {
         this.parcelRepository = parcelRepository;
+        this.determineSize = determineSize;
     }
 
     public Optional<Parcel> getParcelById(final String id) {
@@ -56,6 +60,15 @@ public class ParcelService {
     }
 
     public Parcel saveParcel(Parcel parcel) {
+        parcel.setStatus(ParcelStatus.ID_ADDED);
+        parcel.getParcelHistories().add(ParcelHistory.builder().parcelId(parcel).status(ParcelStatus.ID_ADDED).timestamp(LocalDateTime.now()).build());
+        parcel.setParcelAccess(ParcelAccess.builder()
+                .adminCode(UUID.randomUUID().toString())
+                .clientCode(UUID.randomUUID().toString())
+                .build());
+        parcel.setSize(determineSize.calculateParcelSize(parcel.getLength(), parcel.getWidth(), parcel.getHeight()));
+        parcel.setTimeToDeliver(ParcelDeliveryTimeMock.mockTime(parcel.getStatus()));
+
         return parcelRepository.save(parcel);
     }
 
