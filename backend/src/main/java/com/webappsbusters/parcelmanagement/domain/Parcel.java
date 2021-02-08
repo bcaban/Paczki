@@ -1,12 +1,18 @@
 package com.webappsbusters.parcelmanagement.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -77,4 +83,12 @@ public class Parcel {
     @JoinColumn(name = "parcelAccesses_id", referencedColumnName = "id")
     private ParcelAccess parcelAccess; //TODO PAC-42 generate this on parcel create
 
+    public void setStatus(ParcelStatus newStatus) {
+        if (Objects.nonNull(status) && !status.canChangeTo(newStatus)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("Cannot change parcel status from %s to %s", status, newStatus));
+        }
+
+        this.status = newStatus;
+    }
 }
