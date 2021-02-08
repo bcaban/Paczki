@@ -34,7 +34,7 @@ export class ParcelComponent implements OnInit {
   cannotCancel = false;
   wasCancelRequested = false;
   wasCancelled = false;
-  notCancelled = false;
+  statusCancelled = ParcelStatus.CANCELLED;
 
   isNameLengthTooShort = false;
   wasParcelNameChanged = false;
@@ -97,6 +97,10 @@ export class ParcelComponent implements OnInit {
 
     this.parcelService.getParcelHistory(this.parcelId).subscribe(
       parcelHistory => {
+
+        for (let status of parcelHistory.parcelHistory) {
+          status.status = this.parcelStatusTranslator.translateStatusToPolish(ParcelStatus[status.status]);
+        }
         this.wasParcelHistoryFound = true;
 
         this.logger.info('Received parcel history: {}', parcelHistory.parcelHistory);
@@ -109,6 +113,7 @@ export class ParcelComponent implements OnInit {
       }
     );
   }
+
   cancelParcel(parcelId: string, parcelStatus: string): void {
     const cancelyesno = confirm('Czy na pewno chcesz anulować paczkę?');
     if (cancelyesno === true) {
@@ -124,7 +129,8 @@ export class ParcelComponent implements OnInit {
         );
       }
     }
-    }
+  }
+
   changeDeliveryAddress(receiverCity: string, receiverPostCode: string, receiverStreet: string): void {
 
     if (this.parcel.status !== ParcelStatus.ID_ADDED) {
@@ -191,42 +197,42 @@ export class ParcelComponent implements OnInit {
 
     this.modalService.open(content,
       {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-        if (result === 'DATE_PICKED') {
-          const diff = Math.abs(this.selectedDate.getTime() - new Date().getTime());
-          const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+      if (result === 'DATE_PICKED') {
+        const diff = Math.abs(this.selectedDate.getTime() - new Date().getTime());
+        const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
 
-          if (this.selectedDate < new Date()) {
-            this.wasParcelDateOfDeliverChangeRequested = true;
-            return;
-          }
-
-          if (diffDays < 0 || diffDays > 14) {
-            this.wasParcelDateOfDeliverChangeRequested = true;
-            return;
-          }
-
-          this.daysToDeliver = diffDays;
-
-          const today = new Date();
-          today.setDate(new Date().getDate() + diffDays);
-          this.expectedParcelDeliveryDate = today;
-
-          this.parcelService.changeTimeToDeliver(this.parcelId, diffDays).subscribe(
-            updated => {
-              this.wasParcelDateOfDeliverChanged = true;
-              this.wasParcelDateOfDeliverChangeRequested = true;
-              this.logger.info('Changed parcel {} time to deliver to {}', this.parcel, diffDays);
-
-              this.parcel.timeToDeliver = result.timeToDeliver;
-            },
-            error => {
-              this.wasParcelDateOfDeliverChangeRequested = true;
-              this.logger.info('Cannot change parcel {} time to deliver to: {}', this.parcelId, diffDays);
-            }
-          );
-        } else {
-          this.selectedDate = new Date();
+        if (this.selectedDate < new Date()) {
+          this.wasParcelDateOfDeliverChangeRequested = true;
+          return;
         }
+
+        if (diffDays < 0 || diffDays > 14) {
+          this.wasParcelDateOfDeliverChangeRequested = true;
+          return;
+        }
+
+        this.daysToDeliver = diffDays;
+
+        const today = new Date();
+        today.setDate(new Date().getDate() + diffDays);
+        this.expectedParcelDeliveryDate = today;
+
+        this.parcelService.changeTimeToDeliver(this.parcelId, diffDays).subscribe(
+          updated => {
+            this.wasParcelDateOfDeliverChanged = true;
+            this.wasParcelDateOfDeliverChangeRequested = true;
+            this.logger.info('Changed parcel {} time to deliver to {}', this.parcel, diffDays);
+
+            this.parcel.timeToDeliver = result.timeToDeliver;
+          },
+          error => {
+            this.wasParcelDateOfDeliverChangeRequested = true;
+            this.logger.info('Cannot change parcel {} time to deliver to: {}', this.parcelId, diffDays);
+          }
+        );
+      } else {
+        this.selectedDate = new Date();
+      }
     }, (reason) => {
       this.selectedDate = new Date();
     });

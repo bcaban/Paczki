@@ -14,7 +14,8 @@ import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { CalculateSizeComponent } from './components/calculate-size/calculate-size.component';
 import { CreateParcelComponent } from './components/create-parcel/create-parcel.component';
-import {DlDateTimeDateModule, DlDateTimePickerModule} from "angular-bootstrap-datetimepicker";
+import {DlDateTimeDateModule, DlDateTimePickerModule} from 'angular-bootstrap-datetimepicker';
+import { UpdateAccessComponent } from './components/update-access/update-access.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {DlDateTimeDateModule, DlDateTimePickerModule} from "angular-bootstrap-da
     CalculateSizeComponent,
     AdminPanelComponent,
     CreateParcelComponent,
+    UpdateAccessComponent,
   ],
   imports: [
     BrowserModule,
