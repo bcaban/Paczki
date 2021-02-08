@@ -1,0 +1,51 @@
+<div class="page-wrapper">
+  <div class="d-flex justify-content-center">
+    <div class="d-flex flex-column">
+
+      <div class="d-flex justify-content-center">
+        <div class="h1">Wygeneruj nowy kod dostępu</div>
+      </div>
+
+      <div>
+        <div class="form-header">
+          <label>
+            <input #searchInput class="au-input au-input-xl" type="text"
+                   placeholder="Wprowadź numer paczki..."
+                   (keydown)="clearResults()"
+                   (keypress)="clearResults()"
+                   (keyup)="clearResults()"
+                   (click)="clearResults()"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+
+        <div>
+          <button class="au-btn-submit"
+                  (click)="updateParcelClientCode(searchInput.value)">
+            Wygeneruj nowy kod
+          </button>
+        </div>
+      </div>
+
+      <!-- DO NOT REMOVE - adds some space! -->
+      <div class="pt-3"></div>
+
+      <div class="d-flex justify-content-center">
+        <div class="alert-danger" *ngIf="updateParcelClientCodeEndedWithError;">Zły numer paczki</div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="alert-success" *ngIf="updateParcelClientCodeEndedWithSuccess;">Twój nowy kod dostępu: {{clientAccessCode.clientCode}}</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- END PAGE CONTAINER-->
+<footer>
+  <app-footer></app-footer>
+</footer>
