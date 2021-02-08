@@ -1,7 +1,6 @@
 package com.webappsbusters.parcelmanagement.controller;
 
 import com.webappsbusters.parcelmanagement.domain.*;
-import com.webappsbusters.parcelmanagement.service.ParcelAccessService;
 import com.webappsbusters.parcelmanagement.service.DetermineSize;
 import com.webappsbusters.parcelmanagement.service.ParcelDeliveryTimeMock;
 import com.webappsbusters.parcelmanagement.service.ParcelService;
@@ -24,14 +23,12 @@ import java.util.UUID;
 public class ParcelController {
 
     private final ParcelService parcelService;
-    private final ParcelAccessService parcelAccessService;
     private final MapperFacade mapperFacade;
 
 
     @Autowired
     public ParcelController(ParcelService parcelService, MapperFacade mapperFacade) {
         this.parcelService = parcelService;
-        this.parcelAccessService = parcelAccessService;
         this.mapperFacade = mapperFacade;
     }
 
