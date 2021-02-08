@@ -12,15 +12,14 @@ import {NGXLogger} from 'ngx-logger';
 export class CalculateSizeComponent implements OnInit {
   size: string;
 
-  constructor(private router: Router, private postDimensionsService: CalculateParcelDimensionsService, private logger: NGXLogger) {
+  constructor(private router: Router, private calculateParcelDimensionsService: CalculateParcelDimensionsService, private logger: NGXLogger) {
   }
 
   ngOnInit(): void {
   }
-
   calcsml(length: number, width: number, height: number): void {
     const dummyParcelDimensions = new ParcelDimensions(length, width, height);
-    this.postDimensionsService.postDimensions(dummyParcelDimensions).subscribe(
+    this.calculateParcelDimensionsService.postDimensions(dummyParcelDimensions).subscribe(
       response => {
         if (response.parcelSize === 'NONE') {
           this.size = 'Podano nieprawidłowe wymiary';
