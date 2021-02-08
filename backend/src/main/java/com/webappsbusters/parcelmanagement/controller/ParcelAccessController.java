@@ -18,14 +18,30 @@ public class ParcelAccessController {
     private final MapperFacade mapperFacade;
 
     @PostMapping(value = "/parcels/{parcelId}/access")
-    public ResponseEntity<ParcelAccessStatusHolderDTO> checkAccess(@PathVariable String parcelId, @RequestBody ParcelAccessCodesDTO parcelAccessCodesDTO) {
+    public ResponseEntity<ParcelAccessStatusHolderDTO> checkAccess(@PathVariable String parcelId,
+                                                                   @RequestBody ParcelAccessCodesDTO parcelAccessCodesDTO) {
         final ParcelAccessCodes parcelAccessCodes = mapperFacade.map(parcelAccessCodesDTO, ParcelAccessCodes.class);
 
-        final ParcelAccessStatus parcelAccessStatusResult = parcelAccessService.checkAccess(parcelId, parcelAccessCodes).
+        final ParcelAccessStatus parcelAccessStatusResult = parcelAccessService.checkAccess(parcelId,
+                parcelAccessCodes).
                 orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        ParcelAccessStatusDTO parcelAccessStatusDTO = mapperFacade.map(parcelAccessStatusResult, ParcelAccessStatusDTO.class);
+        ParcelAccessStatusDTO parcelAccessStatusDTO = mapperFacade.map(parcelAccessStatusResult,
+                ParcelAccessStatusDTO.class);
 
         return ResponseEntity.ok(new ParcelAccessStatusHolderDTO(parcelAccessStatusDTO));
+    }
+
+    @PutMapping(value = "/parcels/{parcelId}/updateAccess")
+    public ResponseEntity<ParcelAccessDTO> updateParcelClientCode(@PathVariable String parcelId,
+                                                                  @RequestBody ParcelAccessDTO parcelAccessDTO) {
+        Parcel parcel =
+                parcelAccessService.updateParcelClientCode(parcelId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        ParcelAccess parcelAccess = parcel.getParcelAccess();
+
+        ParcelAccessDTO mappedParcelAccess = mapperFacade.map(parcelAccess, ParcelAccessDTO.class);
+
+        return ResponseEntity.ok(mappedParcelAccess);
     }
 }
