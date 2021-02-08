@@ -60,7 +60,7 @@
         <div class="d-flex justify-content-center">
           <div class="h3">
             <ng-container
-              *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact; else deliveredOrContact">
+              *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact && parcel.status !== statusCancelled; else deliveredOrContact">
 
               <ng-container *ngIf="daysToDeliver > 0; else today">
                 Otrzymasz paczkę za <b>{{daysToDeliver}}</b>
@@ -73,11 +73,16 @@
             </ng-container>
 
             <ng-template #deliveredOrContact>
-              <ng-container *ngIf="parcel.status === statusDelivered; else contact">
+              <ng-container *ngIf="parcel.status === statusDelivered; else cancelledOrContact">
                 <div class="alert-success">Udało się, przesyłka została dostarczona!</div>
               </ng-container>
+              <ng-template #cancelledOrContact>
+                <ng-container *ngIf="parcel.status === statusCancelled; else contact">
+                  <div class="alert-info">Paczka anulowana.</div>
+                </ng-container>
               <ng-template #contact>
                 <div class="alert-danger">Ups, mamy problem z przesyłką, skontaktuj się z obsługą klienta</div>
+              </ng-template>
               </ng-template>
             </ng-template>
           </div>
@@ -85,12 +90,12 @@
 
         <div class="d-flex justify-content-center">
           <div class="h3">
-            <ng-container *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact; else delivered">
+            <ng-container *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact && parcel.status !== statusCancelled">
               Przewidywany termin dostawy: <b>{{expectedParcelDeliveryDate | date: 'dd/MM/yy':'UTC'}}</b>
             </ng-container>
-            <ng-template #delivered>
+            <ng-container *ngIf="parcel.status === statusDelivered">
               Przesyłka została dostarczona: <b>{{expectedParcelDeliveryDate | date: 'dd/MM/yy':'UTC'}}</b>
-            </ng-template>
+            </ng-container>
           </div>
         </div>
         <div class="pt-3">
@@ -296,7 +301,7 @@
 
       <div *ngIf="parcel.status !== statusDelivered">
         <div class="d-flex justify-content-center">
-          <button class="btn btn-lg btn-outline-primary"
+          <button class="au-btn-submit"
                   (click)="open(content)">
             Zmień termin dostawy
           </button>
