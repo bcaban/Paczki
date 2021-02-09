@@ -80,9 +80,9 @@
                 <ng-container *ngIf="parcel.status === statusCancelled; else contact">
                   <div class="alert-info">Paczka anulowana.</div>
                 </ng-container>
-              <ng-template #contact>
-                <div class="alert-danger">Ups, mamy problem z przesyłką, skontaktuj się z obsługą klienta</div>
-              </ng-template>
+                <ng-template #contact>
+                  <div class="alert-danger">Ups, mamy problem z przesyłką, skontaktuj się z obsługą klienta</div>
+                </ng-template>
               </ng-template>
             </ng-template>
           </div>
@@ -90,7 +90,8 @@
 
         <div class="d-flex justify-content-center">
           <div class="h3">
-            <ng-container *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact && parcel.status !== statusCancelled">
+            <ng-container
+              *ngIf="parcel.status !== statusDelivered && parcel.status !== statusContact && parcel.status !== statusCancelled">
               Przewidywany termin dostawy: <b>{{expectedParcelDeliveryDate | date: 'dd/MM/yy':'UTC'}}</b>
             </ng-container>
             <ng-container *ngIf="parcel.status === statusDelivered">
@@ -267,28 +268,39 @@
 
       <!-- DO NOT REMOVE - adds some space! -->
       <div class="pt-3"></div>
-      <div class="d-flex justify-content-center">
+      <div *ngIf="parcel.status === statusCancelled; else wasNotCancelled">
         <div class="h4">
-          Anuluj paczkę
-        </div>
-        <button class="au-btn-submit"
-                (click)="cancelParcel(parcel.parcelId,parcel.status)">
-          Anuluj
-        </button>
-      </div>
-      <div *ngIf="wasCancelRequested">
-        <div *ngIf="wasCancelled; else notCancelled">
-          <div class="alert-success">Anulowano paczkę.</div>
-        </div>
-        <ng-template #notCancelled>
-          <div class="alert-danger">Nie udało sie anulować paczki.</div>
-        </ng-template>
-      </div>
-      <div *ngIf="cannotCancel;">
-        <div class="alert-danger">
-          Przy obecnym statusie nie można anulować paczki.
+
         </div>
       </div>
+
+      <ng-template #wasNotCancelled>
+        <div class="row justify-content-center">
+          <div class="h4">
+            Anuluj paczkę
+          </div>
+          <button class="au-btn-submit"
+                  (click)="cancelParcel(parcel.parcelId,parcel.status)">
+            Anuluj
+          </button>
+        </div>
+        <div class="row justify-content-center">
+          <div *ngIf="wasCancelRequested">
+            <div *ngIf="wasCancelled; else notCancelled">
+              <div class="alert-success">Anulowano paczkę.</div>
+            </div>
+            <ng-template #notCancelled>
+              <div class="alert-danger">Nie udało sie anulować paczki.</div>
+            </ng-template>
+          </div>
+          <div *ngIf="cannotCancel;">
+            <div class="alert-danger">
+              Przy obecnym statusie nie można anulować paczki.
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
       <!-- DO NOT REMOVE - adds some space! -->
       <div class="pt-3"></div>
 

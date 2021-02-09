@@ -12,6 +12,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CreateParcelComponent implements OnInit {
   response: string;
+  ID: string;
+  PASS: string;
+  size: string;
   registerForm: FormGroup;
   submitted = false;
   constructor(private formBuilder: FormBuilder, private router: Router, private parcelService: ParcelService, private logger: NGXLogger) {
@@ -41,6 +44,9 @@ export class CreateParcelComponent implements OnInit {
             this.response = 'Nie można nadać paczki.';
           } else {
             this.response = 'Paczka została nadana.';
+            this.ID = response.parcelId;
+            this.PASS = response.parcelAccess.clientCode;
+            this.size = response.size;
           }
           this.logger.info('Received response: {}', response);
         },
