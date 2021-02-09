@@ -1,3 +1,5 @@
+import {ParcelAccess} from './parcel-access';
+
 export class Parcel {
   name: string;
   parcelId: string;
@@ -14,6 +16,7 @@ export class Parcel {
   width: number;
   size: string;
   timeToDeliver: string;
+  parcelAccess: ParcelAccess;
   constructor(senderCity: string, senderPostCode: string, senderStreet: string, receiverCity: string, receiverPostCode: string, receiverStreet: string, weightInKg: number, length: number, width: number, height: number) {
     this.senderCity = senderCity;
     this.senderPostCode = senderPostCode;
