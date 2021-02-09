@@ -71,6 +71,12 @@ public class Parcel {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "receiverName")
+    private String receiverName;
+
+    @Column(name = "senderName")
+    private String senderName;
+
     @OneToMany(
             targetEntity = ParcelHistory.class,
             mappedBy = "parcelId",
