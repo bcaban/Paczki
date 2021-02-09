@@ -26,6 +26,8 @@ public class ParcelDto {
     private ParcelSizeDto size;
     private Duration timeToDeliver;
     private String name;
+    private String receiverName;
+    private String senderName;
     private ParcelAccessCodesDTO parcelAccess;
 
     @Builder
@@ -45,6 +47,8 @@ public class ParcelDto {
         private final ParcelSizeDto size;
         private final Duration timeToDeliver;
         private final String name;
+        private final String receiverName;
+        private final String senderName;
         private final ParcelAccessCodesDTO parcelAccess;
     }
 }
