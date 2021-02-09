@@ -33,11 +33,13 @@ export class CreateParcelComponent implements OnInit {
       length: ['', [Validators.required, Validators.min(1)]],
       width: ['', [Validators.required, Validators.min(1)]],
       height: ['', [Validators.required, Validators.min(1)]],
+      receiverName: ['', [Validators.required, Validators.minLength(3)]],
+      senderName: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
-  postParcel(senderCity: string, senderPostCode: string, senderStreet: string, receiverCity: string, receiverPostCode: string, receiverStreet: string, weightInKg: number, length: number, width: number, height: number): void {
-      const parcel = new Parcel(senderCity, senderPostCode, senderStreet, receiverCity, receiverPostCode, receiverStreet, weightInKg, length, width, height);
+  postParcel(senderCity: string, senderPostCode: string, senderStreet: string, receiverCity: string, receiverPostCode: string, receiverStreet: string, weightInKg: number, length: number, width: number, height: number, receiverName: string, senderName: string): void {
+      const parcel = new Parcel(senderCity, senderPostCode, senderStreet, receiverCity, receiverPostCode, receiverStreet, weightInKg, length, width, height, receiverName, senderName);
       this.parcelService.createParcel(parcel).subscribe(
         response => {
           if (response.receiverCity === '') {
@@ -67,7 +69,7 @@ export class CreateParcelComponent implements OnInit {
       return;
     }
     if (!this.registerForm.invalid) {
-      this.postParcel(this.registerForm.value.senderCity, this.registerForm.value.senderPostCode, this.registerForm.value.senderStreet, this.registerForm.value.receiverCity, this.registerForm.value.receiverPostCode, this.registerForm.value.receiverStreet, this.registerForm.value.weightInKg, this.registerForm.value.length, this.registerForm.value.width, this.registerForm.value.height);
+      this.postParcel(this.registerForm.value.senderCity, this.registerForm.value.senderPostCode, this.registerForm.value.senderStreet, this.registerForm.value.receiverCity, this.registerForm.value.receiverPostCode, this.registerForm.value.receiverStreet, this.registerForm.value.weightInKg, this.registerForm.value.length, this.registerForm.value.width, this.registerForm.value.height, this.registerForm.value.receiverName, this.registerForm.value.senderName);
       alert('Paczka została nadana.');
       return;
     }
