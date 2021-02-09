@@ -16,6 +16,9 @@ import { CalculateSizeComponent } from './components/calculate-size/calculate-si
 import { CreateParcelComponent } from './components/create-parcel/create-parcel.component';
 import {DlDateTimeDateModule, DlDateTimePickerModule} from 'angular-bootstrap-datetimepicker';
 import { UpdateAccessComponent } from './components/update-access/update-access.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { ServicesComponent } from './components/company-services/services.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { UpdateAccessComponent } from './components/update-access/update-access.
     AdminPanelComponent,
     CreateParcelComponent,
     UpdateAccessComponent,
+    ContactComponent,
+    ServicesComponent,
+    AboutUsComponent,
   ],
   imports: [
     BrowserModule,
