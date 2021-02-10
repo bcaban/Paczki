@@ -11,6 +11,8 @@ import {NGXLogger} from 'ngx-logger';
 export class SearchComponent implements OnInit {
   wasAccessChecked = false;
   canAccessParcel = false;
+  accessDenied = false;
+  wrongParcelId = false;
 
   constructor(private router: Router, private parcelService: ParcelService, private logger: NGXLogger) {
   }
@@ -23,17 +25,15 @@ export class SearchComponent implements OnInit {
       parcelAccess => {
         this.logger.info('Received parcel access: {}', parcelAccess);
 
-        this.wasAccessChecked = true;
-
         if (parcelAccess.access.toLocaleLowerCase() === 'denied') {
-          this.canAccessParcel = false;
+          this.accessDenied = true;
         } else {
           this.router.navigateByUrl(`/search/${parcelId}`);
         }
       },
       error => {
         this.logger.info('Cannot find parcel access for: {}', parcelId);
-        this.router.navigateByUrl(`/search/${parcelId}`);
+        this.wrongParcelId = true;
       }
     );
   }
@@ -51,5 +51,12 @@ export class SearchComponent implements OnInit {
         this.canAccessParcel = false;
       }
     );
+  }
+
+  clearResults(): void {
+    this.wasAccessChecked = false;
+    this.canAccessParcel = false;
+    this.accessDenied = false;
+    this.wrongParcelId = false;
   }
 }
