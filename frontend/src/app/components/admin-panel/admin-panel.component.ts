@@ -36,7 +36,7 @@ export class AdminPanelComponent implements OnInit {
   daysToDeliver = 0;
   expectedParcelDeliveryDate: Date = new Date();
 
-  constructor(private parcelService: ParcelService, private logger: NGXLogger, private modalService: NgbModal) {
+  constructor(private router: Router, private parcelService: ParcelService, private logger: NGXLogger, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
