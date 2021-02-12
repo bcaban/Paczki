@@ -90,7 +90,7 @@
           <div *ngIf="wasAccessChecked; then accessChecked"></div>
 
           <ng-template #accessChecked>
-            <div class="alert-danger" *ngIf="!canAccessParcel;">Zły kod dostępu</div>
+            <div class="alert-danger" *ngIf="!canAccessParcel;">Zła nazwa paczki lub kod dostępu</div>
           </ng-template>
         </div>
       </div>
