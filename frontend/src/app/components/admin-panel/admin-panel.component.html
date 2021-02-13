@@ -79,6 +79,10 @@
           <label>
             <input #receiverCityInput class="au-input au-input-xl" type="text"
                    placeholder="Wprowadź nazwę miasta..."
+                   (keydown)="clearResults()"
+                   (keypress)="clearResults()"
+                   (keyup)="clearResults()"
+                   (click)="clearResults()"
             />
           </label>
 
@@ -89,6 +93,10 @@
           <label>
             <input #receiverPostCodeInput class="au-input au-input-xl" type="text"
                    placeholder="Wprowadź kod pocztowy..."
+                   (keydown)="clearResults()"
+                   (keypress)="clearResults()"
+                   (keyup)="clearResults()"
+                   (click)="clearResults()"
             />
           </label>
 
@@ -99,6 +107,10 @@
           <label>
             <input #receiverStreetInput class="au-input au-input-xl" type="text"
                    placeholder="Wprowadź nazwę ulicy..."
+                   (keydown)="clearResults()"
+                   (keypress)="clearResults()"
+                   (keyup)="clearResults()"
+                   (click)="clearResults()"
             />
           </label>
 
@@ -151,12 +163,20 @@
           <label>
             <input #parcelID class="au-input au-input-xl" type="text"
                    placeholder="Wprowadź id paczki..."
+                   (keydown)="clearResults()"
+                   (keypress)="clearResults()"
+                   (keyup)="clearResults()"
+                   (click)="clearResults()"
             />
           </label>
 
           <label>
             <input #accessCode class="au-input au-input-xl" type="text"
                    placeholder="Wprowadź kod dostępu..."
+                   (keydown)="clearResults()"
+                   (keypress)="clearResults()"
+                   (keyup)="clearResults()"
+                   (click)="clearResults()"
             />
           </label>
 
