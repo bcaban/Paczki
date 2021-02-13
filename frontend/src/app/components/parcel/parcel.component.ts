@@ -242,12 +242,13 @@ export class ParcelComponent implements OnInit {
     });
   }
 
-  clearAddressChangeResults(): void {
+  clearResults(): void {
     this.wasAddressChangeRequested = false;
     this.wasAddressChanged = false;
     this.isWrongAddressInput = false;
     this.wasAddressChangeRequested = false;
     this.isWrongAddressInput = false;
     this.isBadStatus = false;
+    this.wasParcelNameChangeRequested = false;
   }
 }

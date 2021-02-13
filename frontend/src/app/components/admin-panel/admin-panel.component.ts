@@ -163,6 +163,7 @@ export class AdminPanelComponent implements OnInit {
     this.changeDeliveryAddressEndedWithErrorNoAccess = false;
     this.wasAddressChangeRequested = false;
     this.isWrongAddressInput = false;
+    this.isBadStatus = false;
   }
 
   open(content, parcelId, accessCode): void {

@@ -163,7 +163,12 @@
           <label>
             <input #setInput class="au-input au-input-xl" type="text"
                    placeholder="Wprowadź nazwe paczki..."
-                   (keyup.enter)="setNameOfParcel(setInput.value)"/>
+                   (keyup.enter)="setNameOfParcel(setInput.value)"
+                   (keydown)="clearResults()"
+                   (keypress)="clearResults()"
+                   (keyup)="clearResults()"
+                   (click)="clearResults()"
+            />
           </label>
           <button class="au-btn-submit"
                   (click)="setNameOfParcel(setInput.value)">
@@ -228,10 +233,10 @@
         <label>
           <input #receiverCityInput class="au-input au-input-xl" type="text"
                  placeholder="Wprowadź nazwę miasta..."
-                 (keydown)="clearAddressChangeResults()"
-                 (keypress)="clearAddressChangeResults()"
-                 (keyup)="clearAddressChangeResults()"
-                 (click)="clearAddressChangeResults()"
+                 (keydown)="clearResults()"
+                 (keypress)="clearResults()"
+                 (keyup)="clearResults()"
+                 (click)="clearResults()"
           />
         </label>
 
@@ -242,10 +247,10 @@
         <label>
           <input #receiverPostCodeInput class="au-input au-input-xl" type="text"
                  placeholder="Wprowadź kod pocztowy..."
-                 (keydown)="clearAddressChangeResults()"
-                 (keypress)="clearAddressChangeResults()"
-                 (keyup)="clearAddressChangeResults()"
-                 (click)="clearAddressChangeResults()"
+                 (keydown)="clearResults()"
+                 (keypress)="clearResults()"
+                 (keyup)="clearResults()"
+                 (click)="clearResults()"
           />
         </label>
 
@@ -256,10 +261,10 @@
         <label>
           <input #receiverStreetInput class="au-input au-input-xl" type="text"
                  placeholder="Wprowadź nazwę ulicy..."
-                 (keydown)="clearAddressChangeResults()"
-                 (keypress)="clearAddressChangeResults()"
-                 (keyup)="clearAddressChangeResults()"
-                 (click)="clearAddressChangeResults()"
+                 (keydown)="clearResults()"
+                 (keypress)="clearResults()"
+                 (keyup)="clearResults()"
+                 (click)="clearResults()"
           />
         </label>
 
