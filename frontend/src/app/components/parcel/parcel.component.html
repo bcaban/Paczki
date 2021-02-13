@@ -228,6 +228,10 @@
         <label>
           <input #receiverCityInput class="au-input au-input-xl" type="text"
                  placeholder="Wprowadź nazwę miasta..."
+                 (keydown)="clearAddressChangeResults()"
+                 (keypress)="clearAddressChangeResults()"
+                 (keyup)="clearAddressChangeResults()"
+                 (click)="clearAddressChangeResults()"
           />
         </label>
 
@@ -238,6 +242,10 @@
         <label>
           <input #receiverPostCodeInput class="au-input au-input-xl" type="text"
                  placeholder="Wprowadź kod pocztowy..."
+                 (keydown)="clearAddressChangeResults()"
+                 (keypress)="clearAddressChangeResults()"
+                 (keyup)="clearAddressChangeResults()"
+                 (click)="clearAddressChangeResults()"
           />
         </label>
 
@@ -248,6 +256,10 @@
         <label>
           <input #receiverStreetInput class="au-input au-input-xl" type="text"
                  placeholder="Wprowadź nazwę ulicy..."
+                 (keydown)="clearAddressChangeResults()"
+                 (keypress)="clearAddressChangeResults()"
+                 (keyup)="clearAddressChangeResults()"
+                 (click)="clearAddressChangeResults()"
           />
         </label>
 

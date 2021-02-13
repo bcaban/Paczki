@@ -164,6 +164,7 @@ export class AdminPanelComponent implements OnInit {
     this.wasAddressChangeRequested = false;
     this.isWrongAddressInput = false;
   }
+
   open(content, parcelId, accessCode): void {
     this.wasParcelDateOfDeliverChanged = false;
     this.wasParcelDateOfDeliverChangeRequested = false;

@@ -43,6 +43,8 @@ export class ParcelComponent implements OnInit {
   wasParcelDateOfDeliverChanged = false;
   wasParcelDateOfDeliverChangeRequested = false;
 
+  postCodeRegexp = new RegExp('^[0-9]{2}-[0-9]{3}$');
+
   constructor(private route: ActivatedRoute, private parcelService: ParcelService,
               private parcelStatusTranslator: ParcelStatusTranslatorService, private logger: NGXLogger,
               private modalService: NgbModal
@@ -136,7 +138,9 @@ export class ParcelComponent implements OnInit {
     if (this.parcel.status !== ParcelStatus.ID_ADDED) {
       this.isBadStatus = true;
     } else {
-      if (receiverCity.length === 0 || receiverPostCode.length === 0 || receiverPostCode.length === 6 || receiverStreet.length === 0) {
+      const postCodeRegexpTest = this.postCodeRegexp.test(receiverPostCode);
+
+      if (receiverCity.length === 0 || !postCodeRegexpTest || receiverStreet.length === 0) {
         this.wasAddressChangeRequested = false;
         this.wasAddressChanged = false;
         this.isWrongAddressInput = true;
@@ -236,5 +240,14 @@ export class ParcelComponent implements OnInit {
     }, (reason) => {
       this.selectedDate = new Date();
     });
+  }
+
+  clearAddressChangeResults(): void {
+    this.wasAddressChangeRequested = false;
+    this.wasAddressChanged = false;
+    this.isWrongAddressInput = false;
+    this.wasAddressChangeRequested = false;
+    this.isWrongAddressInput = false;
+    this.isBadStatus = false;
   }
 }
